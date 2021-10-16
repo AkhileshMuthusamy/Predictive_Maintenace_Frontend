@@ -1,5 +1,9 @@
 # PredictiveMaintenanceFrontend
 
+[AWS Hosting](http://pm-angular-app.s3-website.us-east-2.amazonaws.com/)
+
+Run `npm run aws-deploy` to deploy the code to aws
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
 
 ## Development server

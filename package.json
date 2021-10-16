@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "aws-deploy" : "aws s3 sync dist/predictive-maintenance-frontend/ s3://pm-angular-app",
+    "aws-clear-s3": "aws s3 rm --recursive s3://pm-angular-app"
   },
   "private": true,
   "dependencies": {
