@@ -1,0 +1,98 @@
+<div class="h-100">
+  <div [ngStyle]="{height: '64px'}" [ngStyle.lt-sm]="{height: '56px'}" style="background-color: teal" *ngIf="!showMenu"></div>
+  <div [ngStyle]="{height: '64px'}" [ngStyle.lt-sm]="{height: '56px'}" *ngIf="showMenu">
+    <mat-toolbar color="primary">
+      <!-- Mobile Header -->
+      <mat-toolbar-row fxHide.gt-xs>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+          <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <span fxLayout="row" fxLayoutAlign="space-between center">
+            <img class="header-logo" src="assets/images/logo.png" />
+          </span>
+          <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar-row>
+      <!-- Desktop Header -->
+      <mat-toolbar-row fxHide.lt-sm>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span fxLayout="row" fxLayoutAlign="space-between center">
+              <img class="header-logo" src="assets/images/logo.png" />
+            </span>
+            <button mat-icon-button class="pl-2" (click)="showMenuLabel = !showMenuLabel">
+              <mat-icon>menu</mat-icon>
+            </button>
+          </div>
+          <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar-row>
+      <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="openModal()">
+          <mat-icon>vpn_key</mat-icon>
+          <span>Change Password</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>meeting_room</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+  </div>
+
+  <div ngClass="full-height-lt-sm" ngClass.gt-xs="full-height-gt-xs">
+    <mat-sidenav-container class="h-100 pt-0" autosize>
+      <mat-sidenav [fxHide]="!showMenu" #sidenav [mode]="sideMenuMode" class="dark-bg" [opened]="sideMenuOpened" (closed)="true">
+        <mat-selection-list [multiple]="false">
+          <mat-list-option class="text-white" (click)="navigate('/admin/dashboard')">
+            <mat-icon mat-list-icon>donut_large</mat-icon>
+            <span *ngIf="showMenuLabel">
+              Dashboard
+            </span>
+          </mat-list-option>
+          <mat-divider></mat-divider>
+          <mat-list-option class="text-white" (click)="navigate('/admin/category')">
+            <mat-icon mat-list-icon>account_tree</mat-icon>
+            <span *ngIf="showMenuLabel">
+              Category
+            </span>
+          </mat-list-option>
+          <mat-divider></mat-divider>
+          <mat-list-option class="text-white" (click)="navigate('/admin/product')">
+            <mat-icon mat-list-icon>inventory_2</mat-icon>
+            <span *ngIf="showMenuLabel">
+              Products
+            </span>
+          </mat-list-option>
+          <mat-divider></mat-divider>
+          <mat-list-option class="text-white" (click)="navigate('/admin/order')">
+            <mat-icon mat-list-icon>list_alt</mat-icon>
+            <span *ngIf="showMenuLabel">
+              Orders
+            </span>
+          </mat-list-option>
+          <mat-divider></mat-divider>
+          <mat-list-option class="text-white" (click)="navigate('/admin/user')">
+            <mat-icon mat-list-icon>account_box</mat-icon>
+            <span *ngIf="showMenuLabel">
+              Users
+            </span>
+          </mat-list-option>
+          <mat-divider></mat-divider>
+        </mat-selection-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+
+        <!-- <router-outlet></router-outlet> -->
+
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+
+</div>
