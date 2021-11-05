@@ -1,0 +1,13 @@
+Dependencies:
+
+npm install @angular/flex-layout@10.0.0-beta.32
+npm install @angular/cdk@10.2.7
+npm install @angular/material@10.2.7
+npm i @ng-bootstrap/ng-bootstrap@8.0.4
+
+
+ng g c main-layout
+ng g module view/dashboard
+ng g c view/dashboard/dashboard --flat
+ng g c view/dashboard/stats-card
+ng g service shared/services/http-interceptor
