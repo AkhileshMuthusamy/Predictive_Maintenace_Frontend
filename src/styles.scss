@@ -167,3 +167,24 @@ a {
     color: #054b99;
   }
 }
+
+table.hover {
+  tbody {
+    tr {
+      cursor: pointer;
+
+
+      &:hover {
+        background-color: #eee !important;
+      }
+
+      &:focus {
+        background-color: #ccc !important;
+      }
+    }
+
+    tr.selected {
+      background-color: #eee !important;
+    }
+  }
+}

@@ -1,1 +1,44 @@
-<p>stats-card works!</p>
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center"
+  fxLayoutAlign.lt-md="space-evenly stretch" fxLayoutGap="30px" class="w-100 p-3">
+  <div fxFlex=32>
+    <mat-card class="card-bottom-grd-1 p-3">
+      <div fxLayout.md="column" fxLayout.gt-md="row" fxLayout.lt-md="row" fxLayoutAlign="start center" fxLayoutAlign.md="center center" fxLayoutGap="20px">
+        <div fxFlex="65px" class="round-icon" fxLayout="row" fxLayoutAlign="center center">
+          <mat-icon>settings_input_component</mat-icon>
+        </div>
+        <div class="text-uppercase" fxLayout="column" fxLayoutAlign.md="center center" fxLayoutAlign="center start" fxLayoutGap="10px">
+          <span class="quick-status-card-title">Total Devices</span>
+          <span class="quick-status-card-body">{{ dashboard?.totalDevices || 0 }}</span>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div fxFlex=32>
+    <mat-card class="card-bottom-grd-2 p-3">
+      <div fxLayout.md="column" fxLayout.gt-md="row" fxLayout.lt-md="row" fxLayoutAlign="start center" fxLayoutAlign.md="center center" fxLayoutGap="20px">
+        <div fxFlex="65px" class="round-icon" fxLayout="row" fxLayoutAlign="center center">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="text-uppercase" fxLayout="column" fxLayoutAlign.md="center center" fxLayoutAlign="center start" fxLayoutGap="10px">
+          <span class="quick-status-card-title">Good Condition</span>
+          <span class="quick-status-card-body">{{ dashboard?.goodCondition || 0 }}</span>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div fxFlex=32>
+    <mat-card class="card-bottom-grd-3 p-3">
+      <div fxLayout.md="column" fxLayout.gt-md="row" fxLayout.lt-md="row" fxLayoutAlign="start center" fxLayoutAlign.md="center center" fxLayoutGap="20px">
+        <div fxFlex="65px" class="round-icon" fxLayout="row" fxLayoutAlign="center center">
+          <mat-icon>build_circle</mat-icon>
+        </div>
+        <div class="text-uppercase" fxLayout="column" fxLayoutAlign.md="center center" fxLayoutAlign="center start" fxLayoutGap="10px">
+          <span class="quick-status-card-title">Need Maintenance</span>
+          <span class="quick-status-card-body">{{ dashboard?.needMaintenance || 0 }}</span>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

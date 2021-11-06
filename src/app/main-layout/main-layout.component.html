@@ -49,14 +49,14 @@
     <mat-sidenav-container class="h-100 pt-0" autosize>
       <mat-sidenav [fxHide]="!showMenu" #sidenav [mode]="sideMenuMode" class="dark-bg" [opened]="sideMenuOpened" (closed)="true">
         <mat-selection-list [multiple]="false">
-          <mat-list-option class="text-white" (click)="navigate('/admin/dashboard')">
+          <mat-list-option class="text-white" (click)="navigate('/dashboard')">
             <mat-icon mat-list-icon>donut_large</mat-icon>
             <span *ngIf="showMenuLabel">
               Dashboard
             </span>
           </mat-list-option>
           <mat-divider></mat-divider>
-          <mat-list-option class="text-white" (click)="navigate('/admin/category')">
+          <!-- <mat-list-option class="text-white" (click)="navigate('/admin/category')">
             <mat-icon mat-list-icon>account_tree</mat-icon>
             <span *ngIf="showMenuLabel">
               Category
@@ -83,13 +83,13 @@
               Users
             </span>
           </mat-list-option>
-          <mat-divider></mat-divider>
+          <mat-divider></mat-divider> -->
         </mat-selection-list>
       </mat-sidenav>
 
       <mat-sidenav-content>
 
-        <!-- <router-outlet></router-outlet> -->
+        <router-outlet></router-outlet>
 
       </mat-sidenav-content>
     </mat-sidenav-container>

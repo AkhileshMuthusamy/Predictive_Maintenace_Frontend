@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatsCardComponent implements OnInit {
 
+  isLoading = false;
+  dashboard = null;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.dashboard = {
+      totalDevices: 2,
+      goodCondition: 1,
+      needMaintenance: 1
+    };
   }
 
 }
