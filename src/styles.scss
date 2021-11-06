@@ -114,6 +114,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-left: $spacer !important;
 }
 
+.pl-4 {
+  padding-left: $spacer * 2 !important;
+
+}
+.pr-4 {
+  padding-right: $spacer * 2 !important;
+}
+
 .scale-3 {
   transform: scale(1.5) !important;
 }

@@ -14,8 +14,8 @@ export class StatsCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.dashboard = {
-      totalDevices: 2,
-      goodCondition: 1,
+      totalDevices: 1,
+      goodCondition: 0,
       needMaintenance: 1
     };
   }

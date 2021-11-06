@@ -1,1 +1,21 @@
-<p>device-info works!</p>
+<div class="p-3" fxLayout="row" fxLayoutAlign="space-between center">
+  <div>
+    <label style="font-size: large;"> Device Name: </label>
+    <label style="font-size: large; font-weight: bold;">D1</label>
+  </div>
+  <div>
+    <label style="font-size: large;"> Remaining Life: </label>
+    <label style="font-size: large; font-weight: bold;">3</label>
+  </div>
+  <div>
+    <label style="font-size: large;"> Maintenance Needed: </label>
+    <label style="font-size: large; font-weight: bold;">Yes</label>
+  </div>
+</div>
+<div class="p-3">
+  <mat-card *ngFor="let i of [0, 1, 2, 3]" class="mb-3 pr-4">
+    <div>
+      <plotly-plot [data]="graph[i].data" [layout]="graph[i].layout"></plotly-plot>
+    </div>
+  </mat-card>
+</div>

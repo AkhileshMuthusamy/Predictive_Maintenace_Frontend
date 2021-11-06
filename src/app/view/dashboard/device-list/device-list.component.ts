@@ -21,7 +21,7 @@ export class DeviceListComponent implements OnInit, AfterViewInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.dataSource.data = [{id: 1, name: 'D1', rul: 20, status: 0}];
+    this.dataSource.data = [{id: 1, name: 'D1', rul: 3, status: 1}];
   }
 
   ngAfterViewInit(): void {
