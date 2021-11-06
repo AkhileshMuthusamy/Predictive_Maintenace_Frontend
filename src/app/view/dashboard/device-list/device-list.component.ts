@@ -3,6 +3,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {Router} from '@angular/router';
 import {Observable, of} from 'rxjs';
+import {ApiService} from 'src/app/shared/services/api.service';
+import {DeviceInfo} from 'src/app/shared/objects/global-objects';
 
 @Component({
   selector: 'app-device-list',
@@ -18,23 +20,33 @@ export class DeviceListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.dataSource.data = [{id: 1, name: 'D1', rul: 3, status: 1}];
+    this.loadDeviceList();
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
-  navigate(device): void {
-
-    console.log(device);
-
-    const path = ['/device', device.id];
-
+  navigate(device: DeviceInfo): void {
+    const path = ['/device', device.deviceId];
     this.router.navigate(path).then(() => {});
+  }
+
+  loadDeviceList(): void {
+    this.dataLoading$ = of(true);
+    this.apiService.getDeviceList().subscribe(response => {
+      this.dataLoading$ = of(false);
+      if (!response.error) {
+        this.dataSource.data = response.data;
+      }
+    }, () => {
+     this.dataLoading$ = of(false);
+    }, () => {
+     this.dataLoading$ = of(false);
+    });
   }
 
 }

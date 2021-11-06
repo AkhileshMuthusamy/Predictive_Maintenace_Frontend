@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {APIResponse} from '../objects/api-response';
-import {DashboardStat} from '../objects/global-objects';
+import {DashboardStat, DeviceInfo} from '../objects/global-objects';
 import {environment} from '../../../environments/environment'
 
 @Injectable({
@@ -18,5 +18,9 @@ export class ApiService {
 
   getDashboardStats(): Observable<APIResponse<DashboardStat>> {
     return this.httpClient.get<APIResponse<DashboardStat>>(`${this.apiURL}dashboard-stats`);
+  }
+
+  getDeviceList(): Observable<APIResponse<[DeviceInfo]>> {
+    return this.httpClient.get<APIResponse<[DeviceInfo]>>(`${this.apiURL}list/device`);
   }
 }
