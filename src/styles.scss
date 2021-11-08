@@ -33,6 +33,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-top: ($spacer * .5) !important;
 }
 
+.mt-2 {
+  margin-top: ($spacer * .5) !important;
+}
+
+.mb-2 {
+  margin-bottom: ($spacer * .5) !important;
+}
+
 .mt-3 {
   margin-top: $spacer !important;
 }

@@ -23,4 +23,9 @@ export class ApiService {
   getDeviceList(): Observable<APIResponse<[DeviceInfo]>> {
     return this.httpClient.get<APIResponse<[DeviceInfo]>>(`${this.apiURL}list/device`);
   }
+
+  addNewDevice(formData): Observable<APIResponse<null>> {
+    return this.httpClient.post<APIResponse<null>>(`${this.apiURL}/device`, formData);
+  }
+
 }

@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {Observable, of} from 'rxjs';
 import {ApiService} from 'src/app/shared/services/api.service';
 import {DeviceInfo} from 'src/app/shared/objects/global-objects';
+import {MatDialog} from '@angular/material/dialog';
+import {NewDeviceDialogComponent} from '../new-device-dialog/new-device-dialog.component';
 
 @Component({
   selector: 'app-device-list',
@@ -20,7 +22,7 @@ export class DeviceListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private router: Router, private apiService: ApiService) { }
+  constructor(public dialog: MatDialog, private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.loadDeviceList();
@@ -46,6 +48,16 @@ export class DeviceListComponent implements OnInit, AfterViewInit {
      this.dataLoading$ = of(false);
     }, () => {
      this.dataLoading$ = of(false);
+    });
+  }
+
+  openAddNewDeviceDialog(): void {
+    const dialogRef = this.dialog.open(NewDeviceDialogComponent, {
+      width: '450px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 
