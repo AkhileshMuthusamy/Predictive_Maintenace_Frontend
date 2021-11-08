@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ApiService} from 'src/app/shared/services/api.service';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-new-device-dialog',
@@ -16,6 +17,7 @@ export class NewDeviceDialogComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private snackBar: MatSnackBar,
+    private dialogRef: MatDialogRef<NewDeviceDialogComponent>,
     private fb: FormBuilder) {
       this.newDeviceForm = this.fb.group({
         device_name: ['', [Validators.required]],
@@ -36,6 +38,16 @@ export class NewDeviceDialogComponent implements OnInit {
 
   submit(): void {
     this.isLoading = true;
+    this.apiService.addNewDevice(this.newDeviceForm.value).subscribe(response => {
+      if (!response.error) {
+        this.snackBar.open(response.message || 'Device added successfully!', 'Close', {duration: 2000});
+        this.dialogRef.close();
+      }
+    }, () => {
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+    });
   }
 
 }
