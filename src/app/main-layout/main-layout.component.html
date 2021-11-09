@@ -5,34 +5,36 @@
       <!-- Mobile Header -->
       <mat-toolbar-row fxHide.gt-xs>
         <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
-          <button mat-icon-button (click)="sidenav.toggle()">
+          <button style="width: 30px;" mat-icon-button (click)="sidenav.toggle()">
             <mat-icon>menu</mat-icon>
           </button>
           <span fxLayout="row" fxLayoutAlign="space-between center">
             <img class="header-logo" src="assets/images/logo.png" />
           </span>
-          <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
+          <!-- <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
             <mat-icon>more_vert</mat-icon>
-          </button>
+          </button> -->
         </div>
       </mat-toolbar-row>
       <!-- Desktop Header -->
       <mat-toolbar-row fxHide.lt-sm>
+        <div class="relative"></div>
         <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <span fxLayout="row" fxLayoutAlign="space-between center">
-              <img class="header-logo" src="assets/images/logo.png" />
-            </span>
-            <button mat-icon-button class="pl-2" (click)="showMenuLabel = !showMenuLabel">
+            <button mat-icon-button (click)="showMenuLabel = !showMenuLabel">
               <mat-icon>menu</mat-icon>
             </button>
+            <span fxLayout="row" class="pl-4" fxLayoutAlign="space-between center">
+              <img class="header-logo" src="assets/images/logo.png" />
+            </span>
+            <label class="text-title pl-3">Predictive Maintenance</label>
           </div>
-          <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
+          <!-- <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
             <mat-icon>more_vert</mat-icon>
-          </button>
+          </button> -->
         </div>
       </mat-toolbar-row>
-      <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <!-- <mat-menu #beforeMenu="matMenu" xPosition="before">
         <button mat-menu-item (click)="openModal()">
           <mat-icon>vpn_key</mat-icon>
           <span>Change Password</span>
@@ -41,7 +43,7 @@
           <mat-icon>meeting_room</mat-icon>
           <span>Logout</span>
         </button>
-      </mat-menu>
+      </mat-menu> -->
     </mat-toolbar>
   </div>
 

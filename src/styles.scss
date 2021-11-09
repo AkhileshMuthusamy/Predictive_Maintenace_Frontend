@@ -161,6 +161,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: mediumseagreen !important;
 }
 
+.text-title {
+  font-weight: 500;
+  font-size: larger;
+  font-variant: petite-caps;
+  letter-spacing: 6px;
+}
+
 .h5 {
   font-size: medium !important;
 }
@@ -203,4 +210,9 @@ table.hover {
       background-color: #eee !important;
     }
   }
+}
+
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+  padding: 0 12px !important;
 }
