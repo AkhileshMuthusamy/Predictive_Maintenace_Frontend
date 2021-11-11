@@ -43,6 +43,7 @@ export class DeviceListComponent implements OnInit, AfterViewInit {
       this.dataLoading$ = of(false);
       if (!response.error) {
         this.dataSource.data = response.data;
+        this.totalLength = response.data.length;
       }
     }, () => {
      this.dataLoading$ = of(false);

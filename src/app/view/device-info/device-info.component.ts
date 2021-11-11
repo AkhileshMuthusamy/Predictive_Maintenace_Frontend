@@ -1,12 +1,49 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {MatTableDataSource} from '@angular/material/table';
+import {Observable, of} from 'rxjs';
+import {MatPaginator} from '@angular/material/paginator';
+import {ApiService} from 'src/app/shared/services/api.service';
 
 @Component({
   selector: 'app-device-info',
   templateUrl: './device-info.component.html',
   styleUrls: ['./device-info.component.scss']
 })
-export class DeviceInfoComponent implements OnInit {
+export class DeviceInfoComponent implements OnInit, AfterViewInit {
+
+  deviceId: string;
+  // To start value from 1
+  // sensorsList = [...Array(2).keys()].map((x) => x + 1);
+  sensorsList = [...Array(21).keys()];
+  displayedColumns: string[] = [
+    'sn_1',
+    'sn_2',
+    'sn_3',
+    'sn_4',
+    'sn_5',
+    'sn_6',
+    'sn_7',
+    'sn_8',
+    'sn_9',
+    'sn_10',
+    'sn_11',
+    'sn_12',
+    'sn_13',
+    'sn_14',
+    'sn_15',
+    'sn_16',
+    'sn_17',
+    'sn_18',
+    'sn_19',
+    'sn_20',
+    'sn_21',
+    'rul'];
+  dataSource = new MatTableDataSource<any>([]);
+  dataLoading$: Observable<boolean> = of(false);
+  totalLength = 0;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public graph = [
     {
@@ -187,11 +224,34 @@ export class DeviceInfoComponent implements OnInit {
     }
   ];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      console.log(params);
+      if (params.id) {
+        this.deviceId = params.id;
+        this.loadSensorReadings();
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+
+  loadSensorReadings(): void {
+    this.dataLoading$ = of(true);
+    this.apiService.fetchSensorValues(this.deviceId).subscribe(response => {
+      this.dataLoading$ = of(false);
+      if (!response.error) {
+        this.dataSource.data = response.data;
+        this.totalLength = response.data.length;
+      }
+    }, () => {
+     this.dataLoading$ = of(false);
+    }, () => {
+     this.dataLoading$ = of(false);
     });
   }
 

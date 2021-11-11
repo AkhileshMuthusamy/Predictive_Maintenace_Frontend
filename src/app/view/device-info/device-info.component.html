@@ -13,9 +13,133 @@
   </div>
 </div>
 <div class="p-3">
-  <mat-card *ngFor="let i of [0, 1, 2, 3]" class="mb-3 pr-4">
-    <div>
+  <mat-card class="mb-3 pr-4">
+    <div *ngFor="let i of [0, 1, 2, 3]">
       <plotly-plot [data]="graph[i].data" [layout]="graph[i].layout"></plotly-plot>
     </div>
   </mat-card>
 </div>
+<mat-card class="">
+  <table mat-table matSort [dataSource]="dataSource" class="w-100 hover">
+    <!-- Sensor Column -->
+    <ng-container matColumnDef="sn_1">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S1 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_1}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_2">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S2 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_2}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_3">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S3 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_3}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_4">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S4 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_4}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_5">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S5 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_5}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_6">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S6 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_6}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_7">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S7 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_7}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_8">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S8 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_8}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_9">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S9 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_9}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_10">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S10 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_10}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_11">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S11 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_11}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_12">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S12 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_12}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_13">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S13 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_13}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_14">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S14 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_14}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_15">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S15 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_15}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_16">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S16 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_16}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_17">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S17 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_17}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_18">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S18 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_18}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_19">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S19 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_19}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_20">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S20 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_20}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sn_21">
+      <th mat-header-cell *matHeaderCellDef class="align-cell-middle"> S21 </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element"> {{element.sn_21}} </td>
+    </ng-container>
+
+    <!-- Rul Column -->
+    <ng-container matColumnDef="rul">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="align-sort-header-center"> Remaining Life </th>
+      <td mat-cell class="align-cell-middle" *matCellDef="let element">{{element.rul || 0}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="true"></tr>
+  </table>
+  <div class="text-center text-secondary" *ngIf="dataSource.data.length == 0">No Data Available</div>
+
+  <div class="mat-table__bottom">
+    <mat-spinner [diameter]="20" *ngIf="dataLoading$ | async"></mat-spinner>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50]" [length]="totalLength" [showFirstLastButtons]="true"></mat-paginator>
+  </div>
+</mat-card>

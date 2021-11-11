@@ -6,7 +6,11 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -34,12 +38,16 @@ PlotlyModule.plotlyjs = PlotlyJS;
     HttpClientModule,
     FlexLayoutModule,
     MatButtonModule,
-    MatToolbarModule,
+    MatCardModule,
     MatIconModule,
     MatSidenavModule,
     MatListModule,
     MatMenuModule,
-    MatCardModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    MatToolbarModule,
+    MatTableModule,
     PlotlyModule
   ],
   providers: [],

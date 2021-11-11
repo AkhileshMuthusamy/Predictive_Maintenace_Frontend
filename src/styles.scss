@@ -216,3 +216,13 @@ table.hover {
 .mat-toolbar-row, .mat-toolbar-single-row {
   padding: 0 12px !important;
 }
+
+.align-cell-middle {
+  text-align: center !important;
+  min-width: 50px !important;
+}
+
+.align-sort-header-center > .mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+}
