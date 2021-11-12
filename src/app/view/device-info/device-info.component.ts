@@ -4,6 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {Observable, of} from 'rxjs';
 import {MatPaginator} from '@angular/material/paginator';
 import {ApiService} from 'src/app/shared/services/api.service';
+import {SensorReading} from 'src/app/shared/objects/global-objects';
 
 @Component({
   selector: 'app-device-info',
@@ -42,6 +43,8 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<any>([]);
   dataLoading$: Observable<boolean> = of(false);
   totalLength = 0;
+
+  xAxis = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -247,12 +250,45 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
       if (!response.error) {
         this.dataSource.data = response.data;
         this.totalLength = response.data.length;
+        this.xAxis = [...Array(this.totalLength).keys()].map((x) => x + 1);
+        this.generateGraphData(response.data);
       }
     }, () => {
      this.dataLoading$ = of(false);
     }, () => {
      this.dataLoading$ = of(false);
     });
+  }
+
+  generateGraphData(sensorReadings: [SensorReading]): any {
+    const graphData = [];
+    const sn: Array<Array<number>> = [];
+    for (const sensorGraph of this.sensorsList) {
+      sn[sensorGraph] = [];
+    }
+
+    for (const sensorReading of sensorReadings) {
+      for (const sensorGraph of this.sensorsList) {
+        sn[sensorGraph].push(sensorReading['sn_' + (sensorGraph + 1)]);
+      }
+
+    }
+
+    for (const sensorGraph of this.sensorsList) {
+      graphData[sensorGraph] = {
+        data: [
+            {
+              x: this.xAxis,
+              y: sn[sensorGraph],
+              type: 'scatter', mode: 'lines+points',
+              marker: {color: 'orange'}
+            },
+        ],
+        layout: { height: 240, title: 'Sensor ' + (sensorGraph + 1)}
+      };
+    }
+
+    console.log(graphData);
   }
 
 }
