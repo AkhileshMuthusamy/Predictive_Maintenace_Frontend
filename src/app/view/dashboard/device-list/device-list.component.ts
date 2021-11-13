@@ -59,15 +59,18 @@ export class DeviceListComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      this.loadDeviceList();
     });
   }
 
   openEditDeviceDialog(row): void {
-    console.log(row);
     const dialogRef = this.dialog.open(EditDeviceDialogComponent, {
       width: '450px',
       data: row
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadDeviceList();
     });
   }
 

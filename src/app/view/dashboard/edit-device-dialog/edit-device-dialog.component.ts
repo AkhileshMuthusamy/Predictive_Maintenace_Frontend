@@ -24,7 +24,7 @@ export class EditDeviceDialogComponent implements OnInit {
     private fb: FormBuilder) {
       this.editDeviceForm = this.fb.group({
         id: [this.data.deviceId],
-        device_name: ['', [Validators.required]],
+        name: [this.data.name, [Validators.required]],
       });
     }
 
@@ -45,8 +45,10 @@ export class EditDeviceDialogComponent implements OnInit {
     this.isLoading = true;
     this.apiService.editDevice(this.editDeviceForm.value).subscribe(response => {
       if (!response.error) {
-        this.snackBar.open(response.message || 'Device added successfully!', 'Close', {duration: 2000});
+        this.snackBar.open(response.message || 'Device updated successfully!', 'Close', {duration: 2000});
         this.dialogRef.close();
+      } else {
+        this.snackBar.open(response.message, 'Close', {duration: 2000});
       }
     }, () => {
       this.isLoading = false;
