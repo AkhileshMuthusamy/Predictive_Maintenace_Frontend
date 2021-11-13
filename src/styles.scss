@@ -122,6 +122,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-left: $spacer !important;
 }
 
+.pr-3 {
+  padding-right: $spacer !important;
+}
+
 .pl-4 {
   padding-left: $spacer * 2 !important;
 

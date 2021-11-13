@@ -12,14 +12,30 @@
     <label style="font-size: large; font-weight: bold;">{{deviceInfo?.status ? 'Yes' : 'No'}}</label>
   </div>
 </div>
-<div class="p-3">
+<div *ngIf="!isSensorReadingsLoading" class="p-3">
   <mat-card class="mb-3 pr-4">
-    <div *ngFor="let i of [0, 1, 2, 3]">
-      <plotly-plot [data]="graph[i].data" [layout]="graph[i].layout"></plotly-plot>
+    <div>
+      <plotly-plot [data]="predGraph?.data" [layout]="predGraph?.layout"></plotly-plot>
     </div>
   </mat-card>
 </div>
-<mat-card class="">
+<div fxLayout="row" fxLayoutAlign="end center" class="pr-3">
+  <button mat-stroked-button (click)="updateSensorReadingsView(0)">
+    <mat-icon>timeline</mat-icon>
+  </button>
+  <button mat-stroked-button (click)="updateSensorReadingsView(1)">
+    <mat-icon>toc</mat-icon>
+  </button>
+</div>
+
+<div *ngIf="!isSensorReadingsLoading && sensorReadingsView === 0" class="p-3">
+  <mat-card class="mb-3 pr-4">
+    <div *ngFor="let i of sensorsList">
+      <plotly-plot [data]="sensorGraph[i]?.data" [layout]="sensorGraph[i]?.layout"></plotly-plot>
+    </div>
+  </mat-card>
+</div>
+<mat-card *ngIf="sensorReadingsView === 1">
   <table mat-table matSort [dataSource]="dataSource" class="w-100 hover">
     <!-- Sensor Column -->
     <ng-container matColumnDef="sn_1">
