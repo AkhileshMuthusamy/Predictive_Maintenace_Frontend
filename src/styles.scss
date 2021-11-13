@@ -203,10 +203,12 @@ table.hover {
 
       &:hover {
         background-color: #eee !important;
+        filter: brightness(0.95);
       }
 
       &:focus {
         background-color: #ccc !important;
+        filter: brightness(0.95);
       }
     }
 
@@ -229,4 +231,13 @@ table.hover {
 .align-sort-header-center > .mat-sort-header-container {
   display:flex;
   justify-content:center;
+}
+
+
+.bg-red {
+  background-color: rgb(243, 178, 178) !important;
+}
+
+.bg-green {
+  background-color: rgb(188, 219, 188) !important;
 }

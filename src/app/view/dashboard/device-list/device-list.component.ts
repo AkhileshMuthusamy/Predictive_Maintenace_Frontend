@@ -7,6 +7,7 @@ import {ApiService} from 'src/app/shared/services/api.service';
 import {DeviceInfo} from 'src/app/shared/objects/global-objects';
 import {MatDialog} from '@angular/material/dialog';
 import {NewDeviceDialogComponent} from '../new-device-dialog/new-device-dialog.component';
+import {EditDeviceDialogComponent} from '../edit-device-dialog/edit-device-dialog.component';
 
 @Component({
   selector: 'app-device-list',
@@ -15,7 +16,7 @@ import {NewDeviceDialogComponent} from '../new-device-dialog/new-device-dialog.c
 })
 export class DeviceListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'rul', 'status'];
+  displayedColumns: string[] = ['name', 'rul', 'status', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   dataLoading$: Observable<boolean> = of(false);
   totalLength = 0;
@@ -59,6 +60,14 @@ export class DeviceListComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openEditDeviceDialog(row): void {
+    console.log(row);
+    const dialogRef = this.dialog.open(EditDeviceDialogComponent, {
+      width: '450px',
+      data: row
     });
   }
 

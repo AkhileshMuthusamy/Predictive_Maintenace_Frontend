@@ -32,6 +32,10 @@ export class ApiService {
     return this.httpClient.post<APIResponse<null>>(`${this.apiURL}/device`, formData);
   }
 
+  editDevice(formData): Observable<APIResponse<null>> {
+    return this.httpClient.put<APIResponse<null>>(`${this.apiURL}/device`, formData);
+  }
+
   fetchSensorValues(deviceId: string): Observable<APIResponse<[SensorReading]>> {
     return this.httpClient.get<APIResponse<[SensorReading]>>(`${this.apiURL}device/reading?id=${deviceId}`);
   }

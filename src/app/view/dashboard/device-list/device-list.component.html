@@ -7,7 +7,7 @@
     </button>
   </div>
   <mat-card class="">
-    <table mat-table matSort [dataSource]="dataSource" class="w-100 hover">
+    <table mat-table matSort [dataSource]="dataSource" class="w-100">
       <!-- ID Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Device Name </th>
@@ -23,21 +23,30 @@
       <!-- Status Column -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let element">{{!element.status ? 'Good' : 'Need Maintenance'}} </td>
+        <td mat-cell *matCellDef="let element">
+          <mat-chip-list>
+            <mat-chip selected [color]="!element.status ? 'primary': 'warn'">
+              {{!element.status ? 'Good' : 'Need Maintenance'}}
+            </mat-chip>
+          </mat-chip-list>
+        </td>
       </ng-container>
 
       <!-- Action Column -->
-     <!-- <ng-container matColumnDef="actions">
+     <ng-container matColumnDef="actions">
        <th mat-header-cell *matHeaderCellDef></th>
        <td mat-cell *matCellDef="let element">
-         <button mat-icon-button matTooltip="Click to Remove" class="" color="warn" (click)="true">
-           <mat-icon aria-label="Delete">delete</mat-icon>
+         <button mat-icon-button matTooltip="Click to Edit" class="" color="primary" (click)="openEditDeviceDialog(element)">
+           <mat-icon aria-label="Edit">edit</mat-icon>
          </button>
+         <button mat-icon-button matTooltip="Click to View" class="" color="primary" (click)="navigate(element)">
+          <mat-icon aria-label="View">visibility</mat-icon>
+        </button>
        </td>
-     </ng-container> -->
+     </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigate(row)"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
     </table>
     <div class="text-center text-secondary" *ngIf="dataSource.data.length == 0">No Data Available</div>
 

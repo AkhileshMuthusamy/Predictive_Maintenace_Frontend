@@ -4,6 +4,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import {MatChipsModule} from '@angular/material/chips';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
@@ -17,12 +18,13 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {RouterModule} from '@angular/router';
 import {DashboardComponent} from './dashboard.component';
 import {DeviceListComponent} from './device-list/device-list.component';
+import {EditDeviceDialogComponent} from './edit-device-dialog/edit-device-dialog.component';
 import {NewDeviceDialogComponent} from './new-device-dialog/new-device-dialog.component';
 import {StatsCardComponent} from './stats-card/stats-card.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, StatsCardComponent, DeviceListComponent, NewDeviceDialogComponent],
+  declarations: [DashboardComponent, StatsCardComponent, DeviceListComponent, NewDeviceDialogComponent, EditDeviceDialogComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -35,6 +37,7 @@ import {StatsCardComponent} from './stats-card/stats-card.component';
     FormsModule,
     MatButtonModule,
     MatCardModule,
+    MatChipsModule,
     MatDialogModule,
     MatDividerModule,
     MatPaginatorModule,
