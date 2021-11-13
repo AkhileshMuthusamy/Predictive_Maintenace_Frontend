@@ -1,15 +1,15 @@
 <div class="p-3" fxLayout="row" fxLayoutAlign="space-between center">
   <div>
     <label style="font-size: large;"> Device Name: </label>
-    <label style="font-size: large; font-weight: bold;">D1</label>
+    <label style="font-size: large; font-weight: bold;">{{deviceInfo?.name}}</label>
   </div>
   <div>
     <label style="font-size: large;"> Remaining Life: </label>
-    <label style="font-size: large; font-weight: bold;">3</label>
+    <label style="font-size: large; font-weight: bold;">{{deviceInfo?.rul}}</label>
   </div>
   <div>
     <label style="font-size: large;"> Maintenance Needed: </label>
-    <label style="font-size: large; font-weight: bold;">Yes</label>
+    <label style="font-size: large; font-weight: bold;">{{deviceInfo?.status ? 'Yes' : 'No'}}</label>
   </div>
 </div>
 <div class="p-3">

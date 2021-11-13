@@ -4,7 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {Observable, of} from 'rxjs';
 import {MatPaginator} from '@angular/material/paginator';
 import {ApiService} from 'src/app/shared/services/api.service';
-import {SensorReading} from 'src/app/shared/objects/global-objects';
+import {SensorReading, DeviceInfo} from 'src/app/shared/objects/global-objects';
 
 @Component({
   selector: 'app-device-info',
@@ -13,6 +13,7 @@ import {SensorReading} from 'src/app/shared/objects/global-objects';
 })
 export class DeviceInfoComponent implements OnInit, AfterViewInit {
 
+  isLoading = false;
   deviceId: string;
   // To start value from 1
   // sensorsList = [...Array(2).keys()].map((x) => x + 1);
@@ -45,6 +46,8 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
   totalLength = 0;
 
   xAxis = [];
+
+  deviceInfo: DeviceInfo;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -233,6 +236,7 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe(params => {
       if (params.id) {
         this.deviceId = params.id;
+        this.loadDeviceInfo();
         this.loadSensorReadings();
       }
     });
@@ -242,6 +246,21 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  loadDeviceInfo(): void {
+    if (this.deviceId) {
+      this.isLoading = true;
+      this.apiService.getDeviceInfo(this.deviceId).subscribe(response => {
+        this.isLoading = false;
+        if (response.data.length > 0) {
+          this.deviceInfo = response.data[0];
+        }
+      }, () => {
+        this.isLoading = false;
+      }, () => {
+        this.isLoading = false;
+      });
+    }
+  }
 
   loadSensorReadings(): void {
     this.dataLoading$ = of(true);

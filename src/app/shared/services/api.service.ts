@@ -20,6 +20,10 @@ export class ApiService {
     return this.httpClient.get<APIResponse<DashboardStat>>(`${this.apiURL}dashboard-stats`);
   }
 
+  getDeviceInfo(deviceId: string): Observable<APIResponse<[DeviceInfo]>> {
+    return this.httpClient.get<APIResponse<[DeviceInfo]>>(`${this.apiURL}device?id=${deviceId}`);
+  }
+
   getDeviceList(): Observable<APIResponse<[DeviceInfo]>> {
     return this.httpClient.get<APIResponse<[DeviceInfo]>>(`${this.apiURL}list/device`);
   }
