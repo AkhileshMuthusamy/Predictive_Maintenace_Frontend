@@ -90,6 +90,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-bottom: ($spacer * .5) !important;
 }
 
+.py-3 {
+  padding-top: $spacer !important;
+  padding-bottom: $spacer !important;
+}
+
 .p-2 {
   padding: ($spacer * .5) !important;
 }

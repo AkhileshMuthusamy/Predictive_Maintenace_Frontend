@@ -1,24 +1,39 @@
-<div class="p-3" fxLayout="row" fxLayoutAlign="space-between center">
-  <div>
-    <label style="font-size: large;"> Device Name: </label>
-    <label style="font-size: large; font-weight: bold;">{{deviceInfo?.name}}</label>
+<div fxLayout="row">
+  <div class="pl-3 py-3" fxFlex="30">
+    <mat-card style="height: 240px;" class="p-3 label-close">
+      <div fxLayout="row" class="py-3">
+        <label fxFlex style="font-size: large;"> Device Name: </label>
+        <label fxFlex style="font-size: large; font-weight: bold;">{{deviceInfo?.name}}</label>
+      </div>
+      <mat-divider></mat-divider>
+      <div fxLayout="row" class="py-3">
+        <label fxFlex style="font-size: large;"> Remaining Life: </label>
+        <label fxFlex style="font-size: large; font-weight: bold;">{{deviceInfo?.rul}}</label>
+      </div>
+      <mat-divider></mat-divider>
+      <div fxLayout="row" class="py-3">
+        <label fxFlex style="font-size: large;"> Status: </label>
+        <mat-chip-list fxFlex>
+          <mat-chip selected [color]="!deviceInfo?.status ? 'primary': 'warn'">
+            <mat-icon *ngIf="!deviceInfo?.status">done_all</mat-icon>
+            <mat-icon *ngIf="deviceInfo?.status">construction</mat-icon>
+            <span class="pl-2">
+              {{!deviceInfo?.status ? 'Good' : 'Need Maintenance'}}
+            </span>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </mat-card>
   </div>
-  <div>
-    <label style="font-size: large;"> Remaining Life: </label>
-    <label style="font-size: large; font-weight: bold;">{{deviceInfo?.rul}}</label>
-  </div>
-  <div>
-    <label style="font-size: large;"> Maintenance Needed: </label>
-    <label style="font-size: large; font-weight: bold;">{{deviceInfo?.status ? 'Yes' : 'No'}}</label>
+  <div fxFlex *ngIf="!isSensorReadingsLoading" class="p-3">
+    <mat-card class="mb-3 pr-4">
+      <div>
+        <plotly-plot [data]="predGraph?.data" [layout]="predGraph?.layout"></plotly-plot>
+      </div>
+    </mat-card>
   </div>
 </div>
-<div *ngIf="!isSensorReadingsLoading" class="p-3">
-  <mat-card class="mb-3 pr-4">
-    <div>
-      <plotly-plot [data]="predGraph?.data" [layout]="predGraph?.layout"></plotly-plot>
-    </div>
-  </mat-card>
-</div>
+
 <div fxLayout="row" fxLayoutAlign="end center" class="pr-3">
   <button mat-stroked-button (click)="updateSensorReadingsView(0)">
     <mat-icon>timeline</mat-icon>
