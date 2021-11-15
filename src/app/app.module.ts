@@ -14,7 +14,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PlotlyModule} from 'angular-plotly.js';
 import * as PlotlyJS from 'plotly.js-dist-min';
@@ -54,7 +54,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatTableModule,
     PlotlyModule
   ],
-  providers: [],
+  providers: [Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
