@@ -1,0 +1,14 @@
+<div class="uploadfilecontainer" [ngClass]="{'disable-div': progress > 0}" (click)="fileInput.click()" appDragDrop (onFileDropped)="fileChangeEvent($event)">
+  <p class="text-center">Drop your file here or click to add file</p>
+  <input hidden type="file" #fileInput [accept]="acceptedFileTypes" (change)="fileChangeEvent($event)">
+</div>
+<p *ngIf="progress > 0" class="font-italic m-0">Uploading...</p>
+<div class="files-list" *ngIf="(selectedFile !== undefined) && showFileList">
+  <p class="p-2"> {{ selectedFile.name }} </p>
+  <button mat-icon-button matTooltip="Click to delete" class="" color="warn" (click)="selectedFile = undefined">
+    <mat-icon aria-label="delete">delete_outline</mat-icon>
+  </button>
+</div>
+<div fxLayout="row" fxLayoutAlign="end center" class="">
+  <button type="button" [disabled]="((progress > 0) || (selectedFile === undefined))" class="btn btn-dark" (click)="uploadFile()">Submit</button>
+</div>

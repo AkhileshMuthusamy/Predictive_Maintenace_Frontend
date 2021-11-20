@@ -21,7 +21,10 @@ import * as PlotlyJS from 'plotly.js-dist-min';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {MainLayoutComponent} from './main-layout/main-layout.component';
+import {DragDropDirective} from './shared/directives/drag-drop.directive';
 import {DeviceInfoComponent} from './view/device-info/device-info.component';
+import {FileUploadComponent} from './view/predict/file-upload/file-upload.component';
+import {PredictComponent} from './view/predict/predict.component';
 
 
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -31,7 +34,10 @@ PlotlyModule.plotlyjs = PlotlyJS;
   declarations: [
     AppComponent,
     MainLayoutComponent,
-    DeviceInfoComponent
+    DeviceInfoComponent,
+    DragDropDirective,
+    PredictComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,

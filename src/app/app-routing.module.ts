@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MainLayoutComponent} from './main-layout/main-layout.component';
 import {DeviceInfoComponent} from './view/device-info/device-info.component';
+import {PredictComponent} from './view/predict/predict.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'device/:id',
         component: DeviceInfoComponent
+      },
+      {
+        path: 'predict',
+        component: PredictComponent
       }
     ]
   }
