@@ -6,10 +6,10 @@
     </mat-select>
   </mat-form-field>
 </div>
-<div class="uploadfilecontainer" [ngClass]="{'disable-div': ((progress > 0) || hideDragNDrop) }" (click)="fileInput.click()" appDragDrop (whenFileDropped)="fileChangeEvent($event)">
+<div class="uploadfilecontainer" [ngClass]="{'disable-div': ((progress > 0) || hideDragNDrop) }" (click)="fileInput.value = ''; fileInput.click()" appDragDrop (whenFileDropped)="fileChangeEvent($event)">
   <p *ngIf="hideDragNDrop" class="text-center">Please select the device to proceed</p>
   <p *ngIf="!hideDragNDrop" class="text-center">Drop your file here or click to add file</p>
-  <input hidden type="file" #fileInput [accept]="acceptedFileTypes" (change)="fileChangeEvent($event)">
+  <input hidden type="file" #fileInput [accept]="validFileTypes.join(',')" (change)="fileChangeEvent($event)">
 </div>
 <!-- <p *ngIf="progress > 0" class="font-italic m-0">Uploading...</p> -->
 <div class="files-list" *ngIf="(selectedFile !== undefined) && showFileList">
@@ -20,7 +20,7 @@
 </div>
 <div style="padding-right: 10%;">
   <div fxLayout="row" fxLayoutAlign="end center" class="">
-    <button mat-raised-button [disabled]="((progress > 0) || (selectedFile === undefined))" aria-label="Add New Device" class="mb-3" color="primary" (click)="uploadFile()">
+    <button mat-raised-button [disabled]="((progress > 0) || (selectedFile === undefined))" aria-label="Upload File" class="mb-3" color="primary" (click)="uploadFile()">
       <mat-icon>file_upload</mat-icon>
       <span *ngIf="progress == 0">Upload</span>
       <span *ngIf="progress > 0">Uploading...</span>

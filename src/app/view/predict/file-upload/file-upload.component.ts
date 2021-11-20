@@ -12,24 +12,29 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class FileUploadComponent implements OnInit {
 
-  acceptedFileTypes = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-  private validFileTypes: Array<string> = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+  validFileTypes: Array<string> = [
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'text/csv',
+    'application/vnd.ms-excel',
+  ];
 
   progress = 0;
   showFileList = false;
   selectedFile: File;
-  submitted = false;
   isLoading = false;
   deviceList = [];
   uploadForm: FormGroup;
   hideDragNDrop = true;
 
-
-  constructor(private apiService: ApiService, private fb: FormBuilder, private snackBar: MatSnackBar) {
+  constructor(
+    private apiService: ApiService,
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
+  ) {
     this.uploadForm = fb.group({
       id: [null, [Validators.required]]
     });
-    this.uploadForm.get('id').valueChanges.subscribe(value => {
+    this.uploadForm.get('id').valueChanges.subscribe((value) => {
       if (!value) {
         this.hideDragNDrop = true;
       } else {
@@ -44,16 +49,19 @@ export class FileUploadComponent implements OnInit {
 
   loadDeviceList(): void {
     this.isLoading = true;
-    this.apiService.getDeviceList().subscribe(response => {
-      this.isLoading = false;
-      if (!response.error) {
-        this.deviceList = response.data;
+    this.apiService.getDeviceList().subscribe((response) => {
+        this.isLoading = false;
+        if (!response.error) {
+          this.deviceList = response.data;
+        }
+      },
+      () => {
+        this.isLoading = false;
+      },
+      () => {
+        this.isLoading = false;
       }
-    }, () => {
-     this.isLoading = false;
-    }, () => {
-     this.isLoading = false;
-    });
+    );
   }
 
   fileChangeEvent(event): void {
@@ -70,48 +78,55 @@ export class FileUploadComponent implements OnInit {
       this.showFileList = true;
     } else {
       this.resetState();
-      this.snackBar.open('Invalid file type', 'Close', {duration: 2000});
+      this.snackBar.open('Invalid file type', 'Close', { duration: 2000 });
     }
   }
 
   uploadFile(): void {
-    this.submitted = true;
 
     const uploadData = new FormData();
     uploadData.append('id', this.uploadForm.controls.id.value);
     uploadData.append('file', this.selectedFile, this.selectedFile.name);
     this.apiService.uploadSensorDataFile(uploadData).subscribe((event: HttpEvent<any>) => {
-      switch (event.type) {
-        case HttpEventType.UploadProgress:
-          this.progress = Math.round(event.loaded / event.total * 100);
-          break;
-        case HttpEventType.Response:
-          if (event.body) {
-            if (event.body.error) {
-              this.snackBar.open(event.body.message, 'Close', {duration: 2000});
-              setTimeout(() => {
-                this.resetState();
-              }, 500);
-            } else {
-              this.snackBar.open(event.body.message || 'File uploaded successfully!', 'Close', {duration: 2000});
-              setTimeout(() => {
-                this.resetState();
-              }, 1500);
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            this.progress = Math.round((event.loaded / event.total) * 100);
+            break;
+          case HttpEventType.Response:
+            if (event.body) {
+              if (event.body.error) {
+                this.snackBar.open(event.body.message, 'Close', {
+                  duration: 2000
+                });
+                setTimeout(() => {
+                  this.resetState();
+                }, 500);
+              } else {
+                this.snackBar.open(
+                  event.body.message || 'File uploaded successfully!',
+                  'Close',
+                  { duration: 2000 }
+                );
+                setTimeout(() => {
+                  this.resetState();
+                }, 1500);
+              }
             }
-          }
+        }
+      },
+      () => {
+        this.resetState();
+        this.snackBar.open('Error while uploading file', 'Close', {
+          duration: 2000,
+        });
       }
-    },
-    () => {
-      this.progress = 0;
-      this.snackBar.open('Error while uploading file', 'Close', {duration: 2000});
-    });
+    );
   }
 
   resetState(): void {
     this.progress = 0;
     this.showFileList = false;
     this.selectedFile = undefined;
-    this.submitted = false;
   }
 }
 
