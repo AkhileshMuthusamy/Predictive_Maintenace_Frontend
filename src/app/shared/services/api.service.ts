@@ -29,15 +29,22 @@ export class ApiService {
   }
 
   addNewDevice(formData): Observable<APIResponse<null>> {
-    return this.httpClient.post<APIResponse<null>>(`${this.apiURL}/device`, formData);
+    return this.httpClient.post<APIResponse<null>>(`${this.apiURL}device`, formData);
   }
 
   editDevice(formData): Observable<APIResponse<null>> {
-    return this.httpClient.put<APIResponse<null>>(`${this.apiURL}/device`, formData);
+    return this.httpClient.put<APIResponse<null>>(`${this.apiURL}device`, formData);
   }
 
   fetchSensorValues(deviceId: string): Observable<APIResponse<[SensorReading]>> {
     return this.httpClient.get<APIResponse<[SensorReading]>>(`${this.apiURL}device/reading?id=${deviceId}`);
+  }
+
+  uploadSensorDataFile(file: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.apiURL}predict/excel`, file, {
+      reportProgress: true,
+      observe: 'events',
+    });
   }
 
 }

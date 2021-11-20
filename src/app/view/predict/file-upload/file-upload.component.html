@@ -1,14 +1,29 @@
-<div class="uploadfilecontainer" [ngClass]="{'disable-div': progress > 0}" (click)="fileInput.click()" appDragDrop (onFileDropped)="fileChangeEvent($event)">
-  <p class="text-center">Drop your file here or click to add file</p>
+<div [formGroup]="uploadForm" fxLayout="row" fxLayoutAlign="center center">
+  <mat-form-field appearance="fill">
+    <mat-label>Select Device</mat-label>
+    <mat-select formControlName="id">
+      <mat-option *ngFor="let device of deviceList" [value]="device.deviceId">{{device.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="uploadfilecontainer" [ngClass]="{'disable-div': ((progress > 0) || hideDragNDrop) }" (click)="fileInput.click()" appDragDrop (whenFileDropped)="fileChangeEvent($event)">
+  <p *ngIf="hideDragNDrop" class="text-center">Please select the device to proceed</p>
+  <p *ngIf="!hideDragNDrop" class="text-center">Drop your file here or click to add file</p>
   <input hidden type="file" #fileInput [accept]="acceptedFileTypes" (change)="fileChangeEvent($event)">
 </div>
-<p *ngIf="progress > 0" class="font-italic m-0">Uploading...</p>
+<!-- <p *ngIf="progress > 0" class="font-italic m-0">Uploading...</p> -->
 <div class="files-list" *ngIf="(selectedFile !== undefined) && showFileList">
   <p class="p-2"> {{ selectedFile.name }} </p>
   <button mat-icon-button matTooltip="Click to delete" class="" color="warn" (click)="selectedFile = undefined">
     <mat-icon aria-label="delete">delete_outline</mat-icon>
   </button>
 </div>
-<div fxLayout="row" fxLayoutAlign="end center" class="">
-  <button type="button" [disabled]="((progress > 0) || (selectedFile === undefined))" class="btn btn-dark" (click)="uploadFile()">Submit</button>
+<div style="padding-right: 10%;">
+  <div fxLayout="row" fxLayoutAlign="end center" class="">
+    <button mat-raised-button [disabled]="((progress > 0) || (selectedFile === undefined))" aria-label="Add New Device" class="mb-3" color="primary" (click)="uploadFile()">
+      <mat-icon>file_upload</mat-icon>
+      <span *ngIf="progress == 0">Upload</span>
+      <span *ngIf="progress > 0">Uploading...</span>
+    </button>
+  </div>
 </div>
