@@ -1,5 +1,5 @@
 <div fxLayout="row">
-  <div class="pl-3 py-3" fxFlex="30">
+  <div class="pl-3 py-3" fxFlex="40">
     <mat-card style="height: 240px;" class="p-3 label-close">
       <div fxLayout="row" class="py-3">
         <label fxFlex style="font-size: large;"> Device Name: </label>
@@ -30,13 +30,21 @@
       </div>
     </mat-card>
   </div>
-  <div fxFlex *ngIf="!isSensorReadingsLoading" class="p-3">
+  <!-- <div fxFlex *ngIf="!isSensorReadingsLoading" class="p-3">
     <mat-card class="mb-3 pr-4">
       <div>
         <plotly-plot [data]="predGraph?.data" [layout]="predGraph?.layout"></plotly-plot>
       </div>
     </mat-card>
-  </div>
+  </div> -->
+</div>
+
+<div *ngIf="!isPredictionGraphLoading" class="p-3">
+  <mat-card class="mb-3 pr-4">
+    <div>
+      <plotly-plot [data]="predGraph?.data" [layout]="predGraph?.layout" [config]="{displayModeBar: false}"></plotly-plot>
+    </div>
+  </mat-card>
 </div>
 
 <div fxLayout="row" fxLayoutAlign="end center" class="pr-3">

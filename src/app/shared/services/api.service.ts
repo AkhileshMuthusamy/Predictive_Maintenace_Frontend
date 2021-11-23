@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {APIResponse} from '../objects/api-response';
-import {DashboardStat, DeviceInfo, SensorReading} from '../objects/global-objects';
+import {DashboardStat, DeviceInfo, SensorReading, PredictionGraphData} from '../objects/global-objects';
 
 @Injectable({
   providedIn: 'root'
@@ -41,10 +41,14 @@ export class ApiService {
   }
 
   uploadSensorDataFile(file: any): Observable<any> {
-    return this.httpClient.post<any>(`${this.apiURL}predict/excel`, file, {
+    return this.httpClient.post<any>(`${this.apiURL}predict/file`, file, {
       reportProgress: true,
       observe: 'events',
     });
+  }
+
+  getPredictionGraphData(deviceId: string): Observable<APIResponse<PredictionGraphData>> {
+    return this.httpClient.get<APIResponse<PredictionGraphData>>(`${this.apiURL}predict/smooth?id=${deviceId}`);
   }
 
 }

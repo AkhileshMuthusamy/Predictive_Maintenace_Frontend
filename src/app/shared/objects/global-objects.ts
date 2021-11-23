@@ -47,3 +47,9 @@ export interface SensorReading {
   'sn_21': number;
   'rul': number;
 }
+
+
+export interface PredictionGraphData {
+  'rul': Array<number>;
+  'smoothRul': Array<number>;
+}

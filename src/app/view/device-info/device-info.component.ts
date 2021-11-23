@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {MatTableDataSource} from '@angular/material/table';
-import {Observable, of} from 'rxjs';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+import {ActivatedRoute} from '@angular/router';
+import {Observable, of} from 'rxjs';
+import {DeviceInfo, PredictionGraphData, SensorReading} from 'src/app/shared/objects/global-objects';
 import {ApiService} from 'src/app/shared/services/api.service';
-import {SensorReading, DeviceInfo} from 'src/app/shared/objects/global-objects';
 
 @Component({
   selector: 'app-device-info',
@@ -15,6 +15,7 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
 
   isLoading = false;
   isSensorReadingsLoading = false;
+  isPredictionGraphLoading = false;
   deviceId: string;
   // To start value from 1
   // sensorsList = [...Array(2).keys()].map((x) => x + 1);
@@ -47,6 +48,7 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
   totalLength = 0;
 
   xAxis = [];
+  predictionXAxis = [];
   predGraph: any;
   sensorGraph: any;
 
@@ -64,6 +66,7 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
       if (params.id) {
         this.deviceId = params.id;
         this.loadDeviceInfo();
+        this.loadPredictionGraph();
         this.loadSensorReadings();
       }
     });
@@ -100,13 +103,30 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
         this.totalLength = response.data.length;
         this.xAxis = [...Array(this.totalLength).keys()].map((x) => x + 1);
         this.generateGraphData(response.data);
-        this.parsePredictionData(response.data);
+        // this.parsePredictionData(response.data);
       }
     }, () => {
      this.dataLoading$ = of(false);
      this.isSensorReadingsLoading = false;
     }, () => {
      this.dataLoading$ = of(false);
+     this.isSensorReadingsLoading = false;
+    });
+  }
+
+  loadPredictionGraph(): void {
+    this.isPredictionGraphLoading = true;
+    this.apiService.getPredictionGraphData(this.deviceId).subscribe(response => {
+      this.isPredictionGraphLoading = false;
+      if (!response.error) {
+        const totalRulCount = response.data.rul.length;
+        this.predictionXAxis = [...Array(totalRulCount).keys()].map((x) => x + 1);
+        this.plotPredictionData(response.data);
+        console.log(this.totalLength);
+      }
+    }, () => {
+     this.isSensorReadingsLoading = false;
+    }, () => {
      this.isSensorReadingsLoading = false;
     });
   }
@@ -127,6 +147,64 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
           },
       ],
       layout: { height: 240, title: 'Predictions'}
+    };
+
+    console.log(this.predGraph);
+  }
+
+  plotPredictionData(predictionGraphData: PredictionGraphData): any {
+
+    this.predGraph = {
+      data: [
+        {
+          x: this.predictionXAxis,
+          y: [...Array(this.predictionXAxis.length).keys()].map((x) => 50),
+          fill: 'tozeroy', // https://plotly.com/javascript/filled-area-plots/
+          // fillcolor: '#f5b4b0', // https://plotly.com/javascript/reference/contour/#contour-fillcolor
+          type: 'scatter',
+          mode: 'line',
+          marker: {color: 'rgb(224, 241, 248)'},
+          hoverinfo: 'skip',
+          name: 'Threshold'
+        },
+        {
+          x: this.predictionXAxis,
+          y: predictionGraphData.rul,
+          type: 'scatter',
+          mode: 'lines+points',
+          name: 'Remaining Life - Raw',
+          marker: {color: '#17BECF'}
+        },
+        {
+          x: this.predictionXAxis,
+          y: predictionGraphData.smoothRul,
+          type: 'scatter',
+          mode: 'lines+points',
+          name: 'Remaining Life - Smoothed',
+          marker: {color: '#7F7F7F'}
+        },
+
+      ],
+      layout: {
+        height: 340,
+        title: 'Predictions',
+        xaxis: {
+          title: 'Cycles Ran',
+        },
+        yaxis: {
+          title: 'Remaining Life',
+        },
+        legend: {
+          // orientation: 'h',
+          x: 1,
+          y: 1,
+          yanchor: 'bottom',
+          xanchor: 'right',
+          // bgcolor: 'LightSteelBlue',
+          // bordercolor: 'Black',
+          // borderwidth: 1
+        }
+      }
     };
 
     console.log(this.predGraph);
