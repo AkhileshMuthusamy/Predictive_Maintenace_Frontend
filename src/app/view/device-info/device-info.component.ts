@@ -51,6 +51,7 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
   predictionXAxis = [];
   predGraph: any;
   sensorGraph: any;
+  rulGuage: any;
 
   deviceInfo: DeviceInfo;
 
@@ -122,13 +123,44 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
         const totalRulCount = response.data.rul.length;
         this.predictionXAxis = [...Array(totalRulCount).keys()].map((x) => x + 1);
         this.plotPredictionData(response.data);
-        console.log(this.totalLength);
+        const currentRUL = response.data.rul[totalRulCount - 1] || 0;
+        const previousRUL = response.data.rul[totalRulCount - 2] || 0;
+        this.loadRULGuage(currentRUL, previousRUL);
       }
     }, () => {
      this.isSensorReadingsLoading = false;
     }, () => {
      this.isSensorReadingsLoading = false;
     });
+  }
+
+  loadRULGuage(rul: number, previousRUL: number): void {
+    this.rulGuage = {
+      data: [
+        { // https://plotly.com/javascript/gauge-charts/
+          domain: { x: [0, 1], y: [0, 1] },
+          value: rul,
+          title: { text: 'Remaining Life' },
+          type: 'indicator',
+          mode: 'gauge+number+delta', // gauge+number+delta
+          delta: { reference: previousRUL },
+          gauge: {
+            axis: { range: [null, 150] },
+            bar: { color: 'rgb(64,88,103)' },
+            steps: [
+              { range: [0, 50], color: 'rgba(254,112,88,255)' },
+              { range: [50, 150], color: 'rgb(154, 250, 210)' }
+            ],
+            // threshold: {
+            //   line: { color: 'red', width: 4 },
+            //   thickness: 0.75,
+            //   value: 490
+            // }
+          }
+        }
+      ],
+      layout: {  height: 240, margin: { t: 50, b: 10 } }
+    };
   }
 
   parsePredictionData(sensorReadings: [SensorReading]): any {
