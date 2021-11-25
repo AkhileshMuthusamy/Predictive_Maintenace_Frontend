@@ -14,7 +14,7 @@
       <div fxLayout="row" class="py-3">
         <label fxFlex style="font-size: large;"> Status: </label>
         <mat-chip-list fxFlex>
-          <mat-chip selected [color]="!deviceInfo?.status ? 'primary': 'warn'">
+          <mat-chip selected [color]="!deviceInfo?.status ? 'accent': 'warn'">
             <mat-icon *ngIf="!deviceInfo?.status">done_all</mat-icon>
             <mat-icon *ngIf="deviceInfo?.status">construction</mat-icon>
             <span class="pl-2">
