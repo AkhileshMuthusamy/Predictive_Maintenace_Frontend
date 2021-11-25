@@ -53,3 +53,14 @@ export interface PredictionGraphData {
   'rul': Array<number>;
   'smoothRul': Array<number>;
 }
+
+
+export interface Settings {
+  '_id': {
+    '$oid': string
+  };
+  'threshold': number;
+  'last_updated': {
+    '$date': number
+  };
+}

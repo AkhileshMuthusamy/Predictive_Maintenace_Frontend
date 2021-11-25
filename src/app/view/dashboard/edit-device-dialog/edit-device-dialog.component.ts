@@ -29,7 +29,6 @@ export class EditDeviceDialogComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    console.log(this.data);
   }
 
   isControlHasError(controlName: string, validationType: string): boolean {

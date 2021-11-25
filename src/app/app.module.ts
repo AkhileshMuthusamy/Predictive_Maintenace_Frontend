@@ -8,6 +8,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -29,6 +30,7 @@ import {DragDropDirective} from './shared/directives/drag-drop.directive';
 import {DeviceInfoComponent} from './view/device-info/device-info.component';
 import {FileUploadComponent} from './view/predict/file-upload/file-upload.component';
 import {PredictComponent} from './view/predict/predict.component';
+import {SettingsComponent} from './view/settings/settings.component';
 
 
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -41,7 +43,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     DeviceInfoComponent,
     DragDropDirective,
     PredictComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatDividerModule,
     MatExpansionModule,
     MatIconModule,
+    MatInputModule,
     MatSelectModule,
     MatSidenavModule,
     MatListModule,

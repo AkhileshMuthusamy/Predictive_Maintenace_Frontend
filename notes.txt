@@ -13,9 +13,11 @@ ng g c view/dashboard/dashboard --flat
 ng g c view/dashboard/stats-card
 ng g service shared/services/http-interceptor
 ng g service shared/services/api
+ng g service shared/services/date
 ng g c view/dashboard/new-device-dialog
 ng g c view/predict
 ng g c view/predict/file-upload
+ng g c view/settings
 
 
 Icon:

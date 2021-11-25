@@ -270,7 +270,6 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
       };
     }
 
-    console.log(graphData);
     this.sensorGraph = graphData;
   }
 

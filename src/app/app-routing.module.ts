@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {MainLayoutComponent} from './main-layout/main-layout.component';
 import {DeviceInfoComponent} from './view/device-info/device-info.component';
 import {PredictComponent} from './view/predict/predict.component';
+import {SettingsComponent} from './view/settings/settings.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'predict',
         component: PredictComponent
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent
       }
     ]
   }
