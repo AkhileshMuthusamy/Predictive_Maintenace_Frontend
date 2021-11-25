@@ -1,6 +1,6 @@
 <div fxLayout="row">
   <div class="pl-3 py-3" fxFlex="40">
-    <mat-card style="height: 240px;" class="p-3 label-close">
+    <mat-card style="height: 280px;" class="p-3 label-close">
       <div fxLayout="row" class="py-3">
         <label fxFlex style="font-size: large;"> Device Name: </label>
         <label fxFlex style="font-size: large; font-weight: bold;">{{deviceInfo?.name}}</label>
@@ -27,6 +27,11 @@
       <div fxLayout="row" class="py-3">
         <label fxFlex style="font-size: large;"> Threshold: </label>
         <label fxFlex style="font-size: large; font-weight: bold;">50</label>
+      </div>
+      <mat-divider></mat-divider>
+      <div fxLayout="row" class="py-3">
+        <label fxFlex style="font-size: large;"> Total Cycles Ran: </label>
+        <label fxFlex style="font-size: large; font-weight: bold;">{{xAxis.length}}</label>
       </div>
     </mat-card>
   </div>

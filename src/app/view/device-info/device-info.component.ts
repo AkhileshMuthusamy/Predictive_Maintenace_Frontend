@@ -159,7 +159,7 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
           }
         }
       ],
-      layout: {  height: 240, margin: { t: 50, b: 10 } }
+      layout: {  height: 280, margin: { t: 50, b: 10 } }
     };
   }
 
