@@ -1,23 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ApiService} from 'src/app/shared/services/api.service';
 import {DataService} from 'src/app/shared/services/data.service';
-import {DateService} from 'src/app/shared/services/date.service';
+import {Settings} from 'src/app/shared/objects/global-objects';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
 
   settingsForm: FormGroup;
   isLoading = false;
 
+  $subscription: Subscription;
+
   constructor(
     private apiService: ApiService,
-    private dateService: DateService,
     private dataService: DataService,
     private snackBar: MatSnackBar,
     private fb: FormBuilder) {
@@ -29,7 +31,11 @@ export class SettingsComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.loadSettings();
+    this.subscribeSettings();
+  }
+
+  ngOnDestroy(): void {
+    this.$subscription.unsubscribe();
   }
 
   isControlHasError(controlName: string, validationType: string): boolean {
@@ -40,20 +46,11 @@ export class SettingsComponent implements OnInit {
     return control.hasError(validationType) && (control.dirty || control.touched);
   }
 
-  loadSettings(): void {
-    this.isLoading = true;
-    this.apiService.getSettings().subscribe(response => {
-      if (!response.error) {
-        this.settingsForm.controls.id.setValue(response.data._id.$oid);
-        this.settingsForm.controls.threshold.setValue(response.data.threshold);
-        this.settingsForm.controls.date.setValue(this.dateService.getDateString(response.data.last_updated.$date));
-      } else {
-        this.snackBar.open(response.message, 'Close', {duration: 2000});
+  subscribeSettings(): void {
+    this.$subscription = this.dataService.getSettings().subscribe((settings: Settings | null) => {
+      if (settings) {
+        this.settingsForm.setValue(settings);
       }
-    }, () => {
-      this.isLoading = false;
-    }, () => {
-      this.isLoading = false;
     });
   }
 
@@ -62,7 +59,6 @@ export class SettingsComponent implements OnInit {
     this.apiService.updateSettings(this.settingsForm.getRawValue()).subscribe(response => {
       if (!response.error) {
         this.snackBar.open(response.message || 'Updated successfully', 'Close', {duration: 2000});
-        this.loadSettings();
         this.dataService.loadSettings();
       } else {
         this.snackBar.open(response.message, 'Close', {duration: 2000});

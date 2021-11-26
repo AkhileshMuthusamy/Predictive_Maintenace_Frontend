@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subscription} from 'rxjs';
 import {DeviceInfo, PredictionGraphData, SensorReading, Settings} from 'src/app/shared/objects/global-objects';
 import {ApiService} from 'src/app/shared/services/api.service';
 import {DataService} from 'src/app/shared/services/data.service';
@@ -12,7 +12,7 @@ import {DataService} from 'src/app/shared/services/data.service';
   templateUrl: './device-info.component.html',
   styleUrls: ['./device-info.component.scss']
 })
-export class DeviceInfoComponent implements OnInit, AfterViewInit {
+export class DeviceInfoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isLoading = false;
   isSensorReadingsLoading = false;
@@ -58,6 +58,8 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
 
   sensorReadingsView = 1;
 
+  $subscription: Subscription;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
@@ -73,7 +75,7 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe(params => {
       if (params.id) {
         this.deviceId = params.id;
-        this.dataService.getSettings().subscribe((settings: Settings | null) => {
+        this.$subscription = this.dataService.getSettings().subscribe((settings: Settings | null) => {
           if (settings) {
             this.threshold = settings.threshold;
             this.loadDeviceInfo();
@@ -87,6 +89,10 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnDestroy(): void {
+    this.$subscription.unsubscribe();
   }
 
   loadDeviceInfo(): void {
@@ -250,8 +256,6 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
         }
       }
     };
-
-    console.log(this.predGraph);
   }
 
   generateGraphData(sensorReadings: [SensorReading]): any {
