@@ -55,4 +55,7 @@ export class ApiService {
     return this.httpClient.get<APIResponse<Settings>>(`${this.apiURL}settings`);
   }
 
+  updateSettings(formData): Observable<APIResponse<null>> {
+    return this.httpClient.put<APIResponse<null>>(`${this.apiURL}settings`, formData);
+  }
 }

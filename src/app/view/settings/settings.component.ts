@@ -20,7 +20,8 @@ export class SettingsComponent implements OnInit {
     private snackBar: MatSnackBar,
     private fb: FormBuilder) {
       this.settingsForm = this.fb.group({
-        threshold: [10, [Validators.required]],
+        id: [null],
+        threshold: [0, [Validators.required, Validators.pattern('[0-9]*')]],
         date: [''],
       });
     }
@@ -34,7 +35,7 @@ export class SettingsComponent implements OnInit {
     if (!control) {
       return false;
     }
-
+    console.log(control);
     return control.hasError(validationType) && (control.dirty || control.touched);
   }
 
@@ -42,6 +43,7 @@ export class SettingsComponent implements OnInit {
     this.isLoading = true;
     this.apiService.getSettings().subscribe(response => {
       if (!response.error) {
+        this.settingsForm.controls.id.setValue(response.data._id.$oid);
         this.settingsForm.controls.threshold.setValue(response.data.threshold);
         this.settingsForm.controls.date.setValue(this.dateService.getDateString(response.data.last_updated.$date));
       } else {
@@ -55,7 +57,19 @@ export class SettingsComponent implements OnInit {
   }
 
   update(): void {
-
+    this.isLoading = true;
+    this.apiService.updateSettings(this.settingsForm.getRawValue()).subscribe(response => {
+      if (!response.error) {
+        this.snackBar.open(response.message || 'Updated successfully', 'Close', {duration: 2000});
+        this.loadSettings();
+      } else {
+        this.snackBar.open(response.message, 'Close', {duration: 2000});
+      }
+    }, () => {
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+    });
   }
 
 }
