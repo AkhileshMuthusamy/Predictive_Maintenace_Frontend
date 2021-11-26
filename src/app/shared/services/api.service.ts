@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {APIResponse} from '../objects/api-response';
-import {DashboardStat, DeviceInfo, SensorReading, PredictionGraphData, Settings} from '../objects/global-objects';
+import {DashboardStat, DeviceInfo, SensorReading, PredictionGraphData, SettingsResponse} from '../objects/global-objects';
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +51,8 @@ export class ApiService {
     return this.httpClient.get<APIResponse<PredictionGraphData>>(`${this.apiURL}predict/smooth?id=${deviceId}`);
   }
 
-  getSettings(): Observable<APIResponse<Settings>> {
-    return this.httpClient.get<APIResponse<Settings>>(`${this.apiURL}settings`);
+  getSettings(): Observable<APIResponse<SettingsResponse>> {
+    return this.httpClient.get<APIResponse<SettingsResponse>>(`${this.apiURL}settings`);
   }
 
   updateSettings(formData): Observable<APIResponse<null>> {

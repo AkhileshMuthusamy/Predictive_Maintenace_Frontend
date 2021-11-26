@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ApiService} from 'src/app/shared/services/api.service';
+import {DataService} from 'src/app/shared/services/data.service';
 import {DateService} from 'src/app/shared/services/date.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class SettingsComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private dateService: DateService,
+    private dataService: DataService,
     private snackBar: MatSnackBar,
     private fb: FormBuilder) {
       this.settingsForm = this.fb.group({
@@ -35,7 +37,6 @@ export class SettingsComponent implements OnInit {
     if (!control) {
       return false;
     }
-    console.log(control);
     return control.hasError(validationType) && (control.dirty || control.touched);
   }
 
@@ -62,6 +63,7 @@ export class SettingsComponent implements OnInit {
       if (!response.error) {
         this.snackBar.open(response.message || 'Updated successfully', 'Close', {duration: 2000});
         this.loadSettings();
+        this.dataService.loadSettings();
       } else {
         this.snackBar.open(response.message, 'Close', {duration: 2000});
       }

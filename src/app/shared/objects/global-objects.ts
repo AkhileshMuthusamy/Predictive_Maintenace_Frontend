@@ -55,7 +55,7 @@ export interface PredictionGraphData {
 }
 
 
-export interface Settings {
+export interface SettingsResponse {
   '_id': {
     '$oid': string
   };
@@ -63,4 +63,10 @@ export interface Settings {
   'last_updated': {
     '$date': number
   };
+}
+
+export interface Settings {
+  'id': string;
+  'threshold': number;
+  'date': string;
 }

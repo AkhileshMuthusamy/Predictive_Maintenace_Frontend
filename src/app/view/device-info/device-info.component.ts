@@ -3,8 +3,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
 import {Observable, of} from 'rxjs';
-import {DeviceInfo, PredictionGraphData, SensorReading} from 'src/app/shared/objects/global-objects';
+import {DeviceInfo, PredictionGraphData, SensorReading, Settings} from 'src/app/shared/objects/global-objects';
 import {ApiService} from 'src/app/shared/services/api.service';
+import {DataService} from 'src/app/shared/services/data.service';
 
 @Component({
   selector: 'app-device-info',
@@ -52,7 +53,7 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
   predGraph: any;
   sensorGraph: any;
   rulGuage: any;
-
+  threshold = 50;
   deviceInfo: DeviceInfo;
 
   sensorReadingsView = 1;
@@ -60,15 +61,26 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+    public dataService: DataService
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       if (params.id) {
         this.deviceId = params.id;
-        this.loadDeviceInfo();
-        this.loadPredictionGraph();
-        this.loadSensorReadings();
+        this.dataService.getSettings().subscribe((settings: Settings | null) => {
+          if (settings) {
+            this.threshold = settings.threshold;
+            this.loadDeviceInfo();
+            this.loadPredictionGraph();
+            this.loadSensorReadings();
+          }
+        });
       }
     });
   }
@@ -148,8 +160,8 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
             axis: { range: [null, 150] },
             bar: { color: 'rgb(64,88,103)' },
             steps: [
-              { range: [0, 50], color: 'rgba(254,112,88,255)' },
-              { range: [50, 150], color: 'rgb(154, 250, 210)' }
+              { range: [0, this.threshold], color: 'rgba(254,112,88,255)' },
+              { range: [this.threshold, 150], color: 'rgb(154, 250, 210)' }
             ],
             // threshold: {
             //   line: { color: 'red', width: 4 },
@@ -190,7 +202,7 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit {
       data: [
         {
           x: this.predictionXAxis,
-          y: [...Array(this.predictionXAxis.length).keys()].map((x) => 50),
+          y: [...Array(this.predictionXAxis.length).keys()].map((x) => this.threshold),
           fill: 'tozeroy', // https://plotly.com/javascript/filled-area-plots/
           // fillcolor: '#f5b4b0', // https://plotly.com/javascript/reference/contour/#contour-fillcolor
           type: 'scatter',
