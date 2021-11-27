@@ -25,11 +25,11 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
         <td mat-cell *matCellDef="let element">
           <mat-chip-list>
-            <mat-chip selected [color]="!element.status ? 'accent': 'warn'">
-              <mat-icon *ngIf="!element.status">done_all</mat-icon>
-              <mat-icon *ngIf="element.status">construction</mat-icon>
+            <mat-chip selected [color]="element.rul > threshold ? 'accent': 'warn'">
+              <mat-icon *ngIf="element.rul > threshold">done_all</mat-icon>
+              <mat-icon *ngIf="element.rul <= threshold">construction</mat-icon>
               <span class="pl-2">
-                {{!element.status ? 'Good' : 'Need Maintenance'}}
+                {{element.rul > threshold ? 'Good' : 'Need Maintenance'}}
               </span>
             </mat-chip>
           </mat-chip-list>

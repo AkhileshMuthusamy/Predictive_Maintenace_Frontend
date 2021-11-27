@@ -1,36 +1,54 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {Router} from '@angular/router';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subscription} from 'rxjs';
+import {DeviceInfo, Settings} from 'src/app/shared/objects/global-objects';
 import {ApiService} from 'src/app/shared/services/api.service';
-import {DeviceInfo} from 'src/app/shared/objects/global-objects';
-import {MatDialog} from '@angular/material/dialog';
-import {NewDeviceDialogComponent} from '../new-device-dialog/new-device-dialog.component';
+import {DataService} from 'src/app/shared/services/data.service';
 import {EditDeviceDialogComponent} from '../edit-device-dialog/edit-device-dialog.component';
+import {NewDeviceDialogComponent} from '../new-device-dialog/new-device-dialog.component';
 
 @Component({
   selector: 'app-device-list',
   templateUrl: './device-list.component.html',
   styleUrls: ['./device-list.component.scss']
 })
-export class DeviceListComponent implements OnInit, AfterViewInit {
+export class DeviceListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   displayedColumns: string[] = ['name', 'rul', 'status', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   dataLoading$: Observable<boolean> = of(false);
   totalLength = 0;
+  threshold = 50;
+
+  $subscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public dialog: MatDialog, private router: Router, private apiService: ApiService) { }
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private apiService: ApiService,
+    private dataService: DataService
+  ) {}
 
   ngOnInit(): void {
-    this.loadDeviceList();
+    this.$subscription = this.dataService.getSettings().subscribe((settings: Settings | null) => {
+      if (settings) {
+        this.threshold = settings.threshold;
+        this.loadDeviceList();
+      }
+    });
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnDestroy(): void {
+    this.$subscription.unsubscribe();
   }
 
   navigate(device: DeviceInfo): void {

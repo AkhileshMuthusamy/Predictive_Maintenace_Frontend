@@ -14,11 +14,11 @@
       <div fxLayout="row" class="py-3">
         <label fxFlex style="font-size: large;"> Status: </label>
         <mat-chip-list fxFlex>
-          <mat-chip selected [color]="!deviceInfo?.status ? 'accent': 'warn'">
-            <mat-icon *ngIf="!deviceInfo?.status">done_all</mat-icon>
-            <mat-icon *ngIf="deviceInfo?.status">construction</mat-icon>
+          <mat-chip selected [color]="deviceInfo?.rul > threshold ? 'accent': 'warn'">
+            <mat-icon *ngIf="deviceInfo?.rul > threshold">done_all</mat-icon>
+            <mat-icon *ngIf="deviceInfo?.rul <= threshold">construction</mat-icon>
             <span class="pl-2">
-              {{!deviceInfo?.status ? 'Good' : 'Need Maintenance'}}
+              {{deviceInfo?.rul > threshold ? 'Good' : 'Need Maintenance'}}
             </span>
           </mat-chip>
         </mat-chip-list>
