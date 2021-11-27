@@ -222,7 +222,7 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit, OnDestroy {
           y: predictionGraphData.rul,
           type: 'scatter',
           mode: 'lines+points',
-          name: 'Remaining Life - Raw',
+          name: 'Raw (Remaining Life)',
           marker: {color: '#17BECF'}
         },
         {
@@ -230,7 +230,7 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit, OnDestroy {
           y: predictionGraphData.smoothRul,
           type: 'scatter',
           mode: 'lines+points',
-          name: 'Remaining Life - Smoothed',
+          name: 'Smoothed (Remaining Life) ',
           marker: {color: '#7F7F7F'}
         },
 
@@ -253,7 +253,8 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit, OnDestroy {
           // bgcolor: 'LightSteelBlue',
           // bordercolor: 'Black',
           // borderwidth: 1
-        }
+        },
+        hovermode: 'x unified'
       }
     };
   }
