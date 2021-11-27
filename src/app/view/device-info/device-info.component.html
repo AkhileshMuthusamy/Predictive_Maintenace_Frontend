@@ -1,3 +1,4 @@
+<ng-container *ngIf="displayPrediction">
 <div fxLayout.gt-lg="row" fxLayout.lt-lg="column" class="p-3" fxLayoutGap="15px">
   <div fxFlex="40">
     <!-- Device Info -->
@@ -44,13 +45,7 @@
       </div>
     </mat-card>
   </div>
-  <!-- Buttons -->
-  <div fxFlex=10>
-    <button mat-raised-button aria-label="View Inputs" class="mb-3 w-100" color="primary" (click)="true">
-      <mat-icon>batch_prediction</mat-icon>
-      View Inputs
-    </button>
-  </div>
+
 </div>
 
 <div *ngIf="!isPredictionGraphLoading" class="p-3">
@@ -61,23 +56,33 @@
   </mat-card>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="end center" class="pr-3">
-  <button mat-stroked-button (click)="updateSensorReadingsView(0)">
-    <mat-icon>timeline</mat-icon>
+</ng-container>
+<!-- Buttons -->
+<div fxLayout="row" fxLayoutAlign="end center" class="p-3" fxLayoutGap="10px">
+  <button mat-raised-button aria-label="View Inputs" color="primary" (click)="displayPrediction = !displayPrediction">
+    <!-- <mat-icon>batch_prediction</mat-icon> -->
+    {{ displayPrediction ? 'View Inputs' : 'View Prediction'}}
   </button>
-  <button mat-stroked-button (click)="updateSensorReadingsView(1)">
-    <mat-icon>toc</mat-icon>
+  <ng-container *ngIf="!displayPrediction">
+  <button mat-raised-button (click)="toggleView()" color="accent">
+    <mat-icon *ngIf="sensorReadingsTableView">timeline</mat-icon>
+    <mat-icon *ngIf="!sensorReadingsTableView">toc</mat-icon>
   </button>
+  </ng-container>
 </div>
 
-<div *ngIf="!isSensorReadingsLoading && sensorReadingsView === 0" class="p-3">
+<div [fxHide]="displayPrediction" class="w-100">
+<div fxLayout="row" fxLayoutAlign="center center">
+  <mat-spinner *ngIf="displaySpinner" color="accent"></mat-spinner>
+</div>
+<div *ngIf="!isSensorReadingsLoading && !sensorReadingsTableView" class="p-3">
   <mat-card class="mb-3 pr-4">
-    <div *ngFor="let i of sensorsList">
-      <plotly-plot [data]="sensorGraph[i]?.data" [layout]="sensorGraph[i]?.layout"></plotly-plot>
+    <div *ngFor="let i of sensorsList" class="pb-2">
+      <plotly-plot [data]="sensorGraph[i]?.data" [layout]="sensorGraph[i]?.layout" (initialized)="whenGraphInitialized()" [config]="{displayModeBar: false}"></plotly-plot>
     </div>
   </mat-card>
 </div>
-<mat-card *ngIf="sensorReadingsView === 1">
+<mat-card *ngIf="sensorReadingsTableView" class="m-3 mw-100 overflow-auto">
   <table mat-table matSort [dataSource]="dataSource" class="w-100 hover">
     <!-- Sensor Column -->
     <ng-container matColumnDef="sn_1">
@@ -201,3 +206,4 @@
     <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50]" [length]="totalLength" [showFirstLastButtons]="true"></mat-paginator>
   </div>
 </mat-card>
+</div>

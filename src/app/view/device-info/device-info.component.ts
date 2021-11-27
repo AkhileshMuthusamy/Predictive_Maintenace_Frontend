@@ -56,7 +56,10 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit, OnDestroy {
   threshold = 50;
   deviceInfo: DeviceInfo;
 
-  sensorReadingsView = 1;
+  displayPrediction = true;
+  sensorReadingsTableView = true;
+  displaySpinner = false;
+  timeout;
 
   $subscription: Subscription;
 
@@ -85,6 +88,14 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     });
+  }
+
+  toggleView(): void {
+    this.displaySpinner = this.sensorReadingsTableView;
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.sensorReadingsTableView = !this.sensorReadingsTableView;
+    }, 10);
   }
 
   ngAfterViewInit(): void {
@@ -122,7 +133,6 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.totalLength = response.data.length;
         this.xAxis = [...Array(this.totalLength).keys()].map((x) => x + 1);
         this.generateGraphData(response.data);
-        // this.parsePredictionData(response.data);
       }
     }, () => {
      this.dataLoading$ = of(false);
@@ -146,9 +156,9 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loadRULGuage(currentRUL, previousRUL);
       }
     }, () => {
-     this.isSensorReadingsLoading = false;
+     this.isPredictionGraphLoading = false;
     }, () => {
-     this.isSensorReadingsLoading = false;
+     this.isPredictionGraphLoading = false;
     });
   }
 
@@ -179,27 +189,6 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit, OnDestroy {
       ],
       layout: {  height: 280, margin: { t: 50, b: 10 } }
     };
-  }
-
-  parsePredictionData(sensorReadings: [SensorReading]): any {
-    const pred = [];
-    for (const sensorReading of sensorReadings) {
-      pred.push(sensorReading.rul);
-    }
-
-    this.predGraph = {
-      data: [
-          {
-            x: this.xAxis,
-            y: pred,
-            type: 'scatter', mode: 'lines+points',
-            marker: {color: 'red'}
-          },
-      ],
-      layout: { height: 240, title: 'Predictions'}
-    };
-
-    console.log(this.predGraph);
   }
 
   plotPredictionData(predictionGraphData: PredictionGraphData): any {
@@ -280,19 +269,35 @@ export class DeviceInfoComponent implements OnInit, AfterViewInit, OnDestroy {
               x: this.xAxis,
               y: sn[sensorGraph],
               type: 'scatter', mode: 'lines+points',
-              marker: {color: 'orange'}
+              marker: {color: 'rgb(34, 162, 93)'}
             },
         ],
-        layout: { height: 240, title: 'Sensor ' + (sensorGraph + 1)}
+        layout: {
+          height: 240,
+          title: {
+            text: 'SENSOR ' + (sensorGraph + 1),
+            font: {
+              size: 20
+            }
+          },
+          xaxis: {
+            title: 'Cycles Ran',
+          },
+          yaxis: {
+            title: 'Sensor Output',
+          },
+          hovermode: 'x unified',
+          plot_bgcolor: 'rgb(245, 248, 248)',
+          paper_bgcolor: 'rgba(242, 248, 246, 5)'
+        }
       };
     }
 
     this.sensorGraph = graphData;
   }
 
-
-  updateSensorReadingsView(value: number): void {
-    this.sensorReadingsView = value;
+  whenGraphInitialized(): void {
+    this.displaySpinner = false;
   }
 
 }
