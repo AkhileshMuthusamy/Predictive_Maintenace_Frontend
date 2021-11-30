@@ -4,6 +4,7 @@ import {MainLayoutComponent} from './main-layout/main-layout.component';
 import {DeviceInfoComponent} from './view/device-info/device-info.component';
 import {PredictComponent} from './view/predict/predict.component';
 import {SettingsComponent} from './view/settings/settings.component';
+import {HomeComponent} from './view/home/home.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,11 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard'
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        component: HomeComponent
       },
       {
         path: 'dashboard',

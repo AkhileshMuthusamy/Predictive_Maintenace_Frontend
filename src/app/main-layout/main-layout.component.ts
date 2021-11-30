@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MediaObserver} from '@angular/flex-layout';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
+import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-layout',
@@ -13,11 +14,23 @@ export class MainLayoutComponent implements OnInit {
   sideMenuOpened = false;
   showMenuLabel = true;
   showMenu = true;
+  isHomePage = false;
 
   constructor(
     public mediaObserver: MediaObserver,
     private router: Router) {
-
+      // Hide sidenav and toolbar on home page
+      this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+        console.log(this.router.url);
+        console.log(event);
+        if (this.router.url === '/home') {
+          this.showMenu = false;
+          this.isHomePage = true;
+        } else {
+          this.showMenu = true;
+          this.isHomePage = false;
+        }
+      });
 
       mediaObserver.asObservable().subscribe((mediaChange) => {
         const screen = mediaChange[0].mqAlias;

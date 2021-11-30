@@ -1,4 +1,10 @@
 <div class="p-3">
+  <mat-card class="pr-5">
+    <plotly-plot [data]="barGraph?.data" [layout]="barGraph?.layout" [config]="{displayModeBar: false}"></plotly-plot>
+  </mat-card>
+</div>
+
+<div class="p-3">
   <div fxLayout="row" fxLayoutAlign="space-betweeen center">
     <div fxFlex class="mat-headline">Devices</div>
     <button mat-raised-button aria-label="Add New Device" class="mb-3" color="primary" (click)="openAddNewDeviceDialog()">
@@ -6,7 +12,7 @@
       Add New Device
     </button>
   </div>
-  <mat-card class="">
+  <mat-card>
     <table mat-table matSort [dataSource]="dataSource" class="w-100">
       <!-- ID Column -->
       <ng-container matColumnDef="name">

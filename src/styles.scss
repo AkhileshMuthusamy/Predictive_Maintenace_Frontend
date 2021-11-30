@@ -156,6 +156,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-right: $spacer * 2 !important;
 }
 
+.pr-5 {
+  padding-right: $spacer * 2.5 !important;
+}
+
 .scale-3 {
   transform: scale(1.5) !important;
 }

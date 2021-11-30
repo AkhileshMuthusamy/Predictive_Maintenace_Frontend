@@ -1,5 +1,20 @@
 <div class="h-100">
-  <div [ngStyle]="{height: '64px'}" [ngStyle.lt-sm]="{height: '56px'}" style="background-color: teal" *ngIf="!showMenu"></div>
+  <div [ngStyle]="{height: '64px'}" [ngStyle.lt-sm]="{height: '56px'}" style="background-color: teal" *ngIf="!showMenu && !isHomePage"></div>
+
+  <div fxLayout="row" class="header" [ngStyle]="{height: '64px'}" *ngIf="isHomePage">
+    <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <span fxLayout="row" fxLayoutAlign="space-between center" (click)="navigate('/home')">
+        <img class="header-logo" src="assets/images/logo.png" />
+      </span>
+      <label class="text-title pl-3" (click)="navigate('/home')">Predictive Maintenance</label>
+    </div>
+
+    <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+      <!-- Place this tag where you want the button to render. -->
+      <a class="github-button" href="https://github.com/AkhileshMuthusamy/PredictiveMaintenance" data-size="large" aria-label="Follow @AkhileshMuthusamy on GitHub">Source Code</a>
+    </div>
+  </div>
+
   <div [ngStyle]="{height: '64px'}" [ngStyle.lt-sm]="{height: '56px'}" *ngIf="showMenu">
     <mat-toolbar color="primary">
       <!-- Mobile Header -->
@@ -24,10 +39,10 @@
             <button mat-icon-button (click)="showMenuLabel = !showMenuLabel">
               <mat-icon>menu</mat-icon>
             </button>
-            <span fxLayout="row" class="pl-4" fxLayoutAlign="space-between center">
+            <span fxLayout="row" class="pl-4" fxLayoutAlign="space-between center" (click)="navigate('/home')">
               <img class="header-logo" src="assets/images/logo.png" />
             </span>
-            <label class="text-title pl-3">Predictive Maintenance</label>
+            <label class="text-title pl-3" (click)="navigate('/home')">Predictive Maintenance</label>
           </div>
           <!-- <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
             <mat-icon>more_vert</mat-icon>

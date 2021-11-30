@@ -28,6 +28,7 @@ import {AppComponent} from './app.component';
 import {MainLayoutComponent} from './main-layout/main-layout.component';
 import {DragDropDirective} from './shared/directives/drag-drop.directive';
 import {DeviceInfoComponent} from './view/device-info/device-info.component';
+import {HomeComponent} from './view/home/home.component';
 import {FileUploadComponent} from './view/predict/file-upload/file-upload.component';
 import {PredictComponent} from './view/predict/predict.component';
 import {SettingsComponent} from './view/settings/settings.component';
@@ -44,7 +45,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     DragDropDirective,
     PredictComponent,
     FileUploadComponent,
-    SettingsComponent
+    SettingsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
