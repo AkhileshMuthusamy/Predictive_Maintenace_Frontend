@@ -23,6 +23,32 @@ export class DeviceListComponent implements OnInit, AfterViewInit, OnDestroy {
   totalLength = 0;
   threshold = 50;
 
+  barGraph = {
+    data: [
+      {
+        x: [],
+        y: [],
+        name: 'Cycles Ran',
+        type: 'bar',
+        marker: {color: 'rgba(0,189,174,255)'}
+      },
+      {
+        x: [],
+        y: [],
+        name: 'Remaining Life',
+        type: 'bar',
+        marker: {color: 'rgba(222,45,38,0.8)'}
+      }
+    ],
+    layout: {
+      barmode: 'stack',
+      title: 'Overall Performance',
+      xaxis: {
+        tickangle: -45
+      },
+    }
+  };
+
   $subscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -63,6 +89,7 @@ export class DeviceListComponent implements OnInit, AfterViewInit, OnDestroy {
       if (!response.error) {
         this.dataSource.data = response.data;
         this.totalLength = response.data.length;
+        this.loadBarGraph(response.data);
       }
     }, () => {
      this.dataLoading$ = of(false);
@@ -90,6 +117,45 @@ export class DeviceListComponent implements OnInit, AfterViewInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       this.loadDeviceList();
     });
+  }
+
+  loadBarGraph(deviceInfos: [DeviceInfo]): void {
+
+    const xBar = [];
+    const yCyclesRan = [];
+    const yRUL = [];
+
+    for (const deviceInfo of deviceInfos) {
+      xBar.push(deviceInfo.name);
+      yCyclesRan.push(deviceInfo.cycle_ran);
+      yRUL.push(deviceInfo.rul);
+    }
+
+    this.barGraph = {
+      data: [
+        {
+          x: xBar,
+          y: yCyclesRan,
+          name: 'Cycles Ran',
+          type: 'bar',
+          marker: {color: 'rgba(0,189,174,255)'}
+        },
+        {
+          x: xBar,
+          y: yRUL,
+          name: 'Remaining Life',
+          type: 'bar',
+          marker: {color: 'rgba(222,45,38,0.8)'}
+        }
+      ],
+      layout: {
+        barmode: 'stack',
+        title: 'Overall Performance',
+        xaxis: {
+          tickangle: -45
+        }
+      }
+    };
   }
 
 }

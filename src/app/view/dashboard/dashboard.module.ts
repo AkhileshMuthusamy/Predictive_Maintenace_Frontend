@@ -16,11 +16,15 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {RouterModule} from '@angular/router';
+import {PlotlyModule} from 'angular-plotly.js';
+import * as PlotlyJS from 'plotly.js-dist-min';
 import {DashboardComponent} from './dashboard.component';
 import {DeviceListComponent} from './device-list/device-list.component';
 import {EditDeviceDialogComponent} from './edit-device-dialog/edit-device-dialog.component';
 import {NewDeviceDialogComponent} from './new-device-dialog/new-device-dialog.component';
 import {StatsCardComponent} from './stats-card/stats-card.component';
+
+PlotlyModule.plotlyjs = PlotlyJS;
 
 
 @NgModule({
@@ -48,6 +52,7 @@ import {StatsCardComponent} from './stats-card/stats-card.component';
     MatInputModule,
     MatTableModule,
     MatTooltipModule,
+    PlotlyModule,
     ReactiveFormsModule
   ]
 })

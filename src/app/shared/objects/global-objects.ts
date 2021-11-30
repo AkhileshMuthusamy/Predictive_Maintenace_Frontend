@@ -13,6 +13,7 @@ export interface DeviceInfo {
   'deviceId': number;
   'name': string;
   'rul': number | null;
+  'cycle_ran': number;
   'status': number;
 }
 
