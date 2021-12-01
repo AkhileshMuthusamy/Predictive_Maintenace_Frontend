@@ -2,11 +2,29 @@
 .container-1 {
   background-color: #1a0f5e;
 
+  .main-text {
+    color: whitesmoke;
+    font-weight: 100;
+    font-size: 25px;
+    padding: 20px;
+    padding-left: 150px;
+  }
+
   img {
     height: 650px;
   }
 
 
+
+  .round-button {
+    margin-left: 150px !important;
+    text-decoration: none !important;
+    color: whitesmoke !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 .credit {
@@ -20,3 +38,24 @@
     font-weight: 100;
   }
 }
+
+div {
+  .card {
+    width: 250px;
+    height: 150px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    padding: 25px;
+
+    .title {
+      font-size: larger;
+    }
+
+    .body {
+      font-weight: 100;
+      padding: 20px;
+    }
+  }
+
+}
+

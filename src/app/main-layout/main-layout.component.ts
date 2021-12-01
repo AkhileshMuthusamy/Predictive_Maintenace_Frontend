@@ -50,7 +50,11 @@ export class MainLayoutComponent implements OnInit {
   }
 
   navigate(path): void {
-    this.router.navigate([path]).then(() => {});
+    this.router.navigate([path]).then(() => {
+      if (path === '/home' || path === '/dashboard') {
+        window.location.reload();
+      }
+    });
   }
 
 }

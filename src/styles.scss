@@ -112,6 +112,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-bottom: $spacer !important;
 }
 
+.py-4 {
+  padding-top: ($spacer * 2) !important;
+  padding-bottom: ($spacer * 2) !important;
+}
+
 .p-2 {
   padding: ($spacer * .5) !important;
 }
@@ -196,10 +201,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: larger;
   font-variant: petite-caps;
   letter-spacing: 6px;
+  cursor: pointer;
 }
 
 .text-light {
   color: #aeb5b5;
+}
+
+.round-button {
+  border: 3px solid white;
+  border-radius: 40px;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(216, 220, 224) !important;
+    border-color: rgb(216, 220, 224);
+  }
 }
 
 .h5 {
