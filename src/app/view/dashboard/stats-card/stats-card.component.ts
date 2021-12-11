@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../../shared/services/api.service';
-import {DashboardStat} from 'src/app/shared/objects/global-objects';
+import {DashboardStat, Settings} from 'src/app/shared/objects/global-objects';
+import {Subscription} from 'rxjs';
+import {DataService} from 'src/app/shared/services/data.service';
 
 @Component({
   selector: 'app-stats-card',
@@ -11,10 +13,19 @@ export class StatsCardComponent implements OnInit {
 
   isLoading = false;
   dashboard: DashboardStat;
+  threshold = 50;
 
-  constructor(private apiService: ApiService) { }
+  $subscription: Subscription;
+
+  constructor(private apiService: ApiService, private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.$subscription = this.dataService.getSettings().subscribe((settings: Settings | null) => {
+      if (settings) {
+        this.threshold = settings.threshold;
+        this.loadDeviceList();
+      }
+    });
     this.loadDashboardStats();
   }
 
@@ -29,6 +40,29 @@ export class StatsCardComponent implements OnInit {
       this.isLoading = false;
     }, () => {
       this.isLoading = false;
+      this.loadDeviceList();
+    });
+  }
+
+  loadDeviceList(): void {
+    this.apiService.getDeviceList().subscribe(response => {
+      if (!response.error) {
+        let goodDevice = 0;
+        let badDevice = 0;
+        const dt = response.data;
+        for (const d of dt) {
+          console.log(d);
+          if (d.rul > this.threshold) {
+            goodDevice += 1;
+          } else {
+            badDevice += 1;
+          }
+        }
+        this.dashboard.goodCondition = goodDevice;
+        this.dashboard.needMaintenance = badDevice;
+      }
+    }, () => {
+    }, () => {
     });
   }
 
