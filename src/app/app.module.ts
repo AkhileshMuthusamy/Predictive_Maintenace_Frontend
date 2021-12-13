@@ -1,4 +1,4 @@
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -21,19 +21,21 @@ import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {BrowserModule, Title} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ServiceWorkerModule} from '@angular/service-worker';
 import {PlotlyModule} from 'angular-plotly.js';
 import * as PlotlyJS from 'plotly.js-dist-min';
+import {environment} from '../environments/environment';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {MainLayoutComponent} from './main-layout/main-layout.component';
 import {DragDropDirective} from './shared/directives/drag-drop.directive';
+import {SharedModule} from './shared/shared.module';
 import {DeviceInfoComponent} from './view/device-info/device-info.component';
 import {HomeComponent} from './view/home/home.component';
 import {FileUploadComponent} from './view/predict/file-upload/file-upload.component';
 import {PredictComponent} from './view/predict/predict.component';
 import {SettingsComponent} from './view/settings/settings.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import {HttpInterceptorService} from './shared/services/http-interceptor.service';
 
 
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -76,9 +78,17 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatTableModule,
     PlotlyModule,
     ReactiveFormsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    SharedModule
   ],
-  providers: [Title],
+  providers: [
+    Title,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

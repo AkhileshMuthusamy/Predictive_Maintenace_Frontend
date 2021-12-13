@@ -1,7 +1,9 @@
 <div class="p-3">
-  <mat-card class="pr-5">
-    <plotly-plot [data]="barGraph?.data" [layout]="barGraph?.layout" [config]="{displayModeBar: false}"></plotly-plot>
-  </mat-card>
+  <div [appLoader]="isDeviceListLoading">
+    <mat-card class="pr-5">
+      <plotly-plot [data]="barGraph?.data" [layout]="barGraph?.layout" [config]="{displayModeBar: false}"></plotly-plot>
+    </mat-card>
+  </div>
 </div>
 
 <div class="p-3">
@@ -12,57 +14,58 @@
       Add New Device
     </button>
   </div>
-  <mat-card>
-    <table mat-table matSort [dataSource]="dataSource" class="w-100">
-      <!-- ID Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Device Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
+  <div [appLoader]="isDeviceListLoading">
+    <mat-card>
+      <table mat-table matSort [dataSource]="dataSource" class="w-100">
+        <!-- ID Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Device Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
 
-      <!-- Email Column -->
-      <ng-container matColumnDef="rul">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Remaining Life </th>
-        <td mat-cell *matCellDef="let element">{{element.rul || 0}} </td>
-      </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="rul">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Remaining Life </th>
+          <td mat-cell *matCellDef="let element">{{element.rul || 0}} </td>
+        </ng-container>
 
-      <!-- Status Column -->
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let element">
-          <mat-chip-list>
-            <mat-chip selected [color]="element.rul > threshold ? 'accent': 'warn'">
-              <mat-icon *ngIf="element.rul > threshold">done_all</mat-icon>
-              <mat-icon *ngIf="element.rul <= threshold">construction</mat-icon>
-              <span class="pl-2">
-                {{element.rul > threshold ? 'Good' : 'Need Maintenance'}}
-              </span>
-            </mat-chip>
-          </mat-chip-list>
-        </td>
-      </ng-container>
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-chip-list>
+              <mat-chip selected [color]="element.rul > threshold ? 'accent': 'warn'">
+                <mat-icon *ngIf="element.rul > threshold">done_all</mat-icon>
+                <mat-icon *ngIf="element.rul <= threshold">construction</mat-icon>
+                <span class="pl-2">
+                  {{element.rul > threshold ? 'Good' : 'Need Maintenance'}}
+                </span>
+              </mat-chip>
+            </mat-chip-list>
+          </td>
+        </ng-container>
 
-      <!-- Action Column -->
-     <ng-container matColumnDef="actions">
-       <th mat-header-cell *matHeaderCellDef></th>
-       <td mat-cell *matCellDef="let element">
-         <button mat-icon-button matTooltip="Click to Edit" class="" color="primary" (click)="openEditDeviceDialog(element)">
-           <mat-icon aria-label="Edit">edit</mat-icon>
-         </button>
-         <button mat-icon-button matTooltip="Click to View" class="" color="primary" (click)="navigate(element)">
-          <mat-icon aria-label="View">visibility</mat-icon>
-        </button>
-       </td>
-     </ng-container>
+        <!-- Action Column -->
+       <ng-container matColumnDef="actions">
+         <th mat-header-cell *matHeaderCellDef></th>
+         <td mat-cell *matCellDef="let element">
+           <button mat-icon-button matTooltip="Click to Edit" class="" color="primary" (click)="openEditDeviceDialog(element)">
+             <mat-icon aria-label="Edit">edit</mat-icon>
+           </button>
+           <button mat-icon-button matTooltip="Click to View" class="" color="primary" (click)="navigate(element)">
+            <mat-icon aria-label="View">visibility</mat-icon>
+          </button>
+         </td>
+       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
-    </table>
-    <div class="text-center text-secondary" *ngIf="dataSource.data.length == 0">No Data Available</div>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+      </table>
+      <div class="text-center text-secondary" *ngIf="dataSource.data.length == 0">No Data Available</div>
 
-    <div class="mat-table__bottom">
-      <mat-spinner [diameter]="20" *ngIf="dataLoading$ | async"></mat-spinner>
-      <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50]" [length]="totalLength" [showFirstLastButtons]="true"></mat-paginator>
-    </div>
-  </mat-card>
+      <div class="mat-table__bottom">
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50]" [length]="totalLength" [showFirstLastButtons]="true"></mat-paginator>
+      </div>
+    </mat-card>
+  </div>
 </div>

@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center"
   fxLayoutAlign.lt-md="space-evenly stretch" fxLayoutGap="30px" class="w-100 p-3">
-  <div fxFlex=32>
+  <div fxFlex=32 [appLoader]="isLoading">
     <mat-card class="card-bottom-grd-1 p-3">
       <div fxLayout.md="column" fxLayout.gt-md="row" fxLayout.lt-md="row" fxLayoutAlign="start center" fxLayoutAlign.md="center center" fxLayoutGap="20px">
         <div fxFlex="65px" class="round-icon" fxLayout="row" fxLayoutAlign="center center">
@@ -14,7 +14,7 @@
     </mat-card>
   </div>
 
-  <div fxFlex=32>
+  <div fxFlex=32 [appLoader]="isLoading">
     <mat-card class="card-bottom-grd-2 p-3">
       <div fxLayout.md="column" fxLayout.gt-md="row" fxLayout.lt-md="row" fxLayoutAlign="start center" fxLayoutAlign.md="center center" fxLayoutGap="20px">
         <div fxFlex="65px" class="round-icon" fxLayout="row" fxLayoutAlign="center center">
@@ -28,7 +28,7 @@
     </mat-card>
   </div>
 
-  <div fxFlex=32>
+  <div fxFlex=32 [appLoader]="isLoading">
     <mat-card class="card-bottom-grd-3 p-3">
       <div fxLayout.md="column" fxLayout.gt-md="row" fxLayout.lt-md="row" fxLayoutAlign="start center" fxLayoutAlign.md="center center" fxLayoutGap="20px">
         <div fxFlex="65px" class="round-icon" fxLayout="row" fxLayoutAlign="center center">

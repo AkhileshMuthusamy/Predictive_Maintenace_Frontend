@@ -19,7 +19,7 @@ export class DeviceListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   displayedColumns: string[] = ['name', 'rul', 'status', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
-  dataLoading$: Observable<boolean> = of(false);
+  isDeviceListLoading = false;
   totalLength = 0;
   threshold = 50;
 
@@ -83,18 +83,18 @@ export class DeviceListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadDeviceList(): void {
-    this.dataLoading$ = of(true);
+    this.isDeviceListLoading = true;
     this.apiService.getDeviceList().subscribe(response => {
-      this.dataLoading$ = of(false);
+      this.isDeviceListLoading = false;
       if (!response.error) {
         this.dataSource.data = response.data;
         this.totalLength = response.data.length;
         this.loadBarGraph(response.data);
       }
     }, () => {
-     this.dataLoading$ = of(false);
+     this.isDeviceListLoading = false;
     }, () => {
-     this.dataLoading$ = of(false);
+     this.isDeviceListLoading = false;
     });
   }
 

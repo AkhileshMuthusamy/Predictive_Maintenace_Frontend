@@ -23,12 +23,19 @@ import {DeviceListComponent} from './device-list/device-list.component';
 import {EditDeviceDialogComponent} from './edit-device-dialog/edit-device-dialog.component';
 import {NewDeviceDialogComponent} from './new-device-dialog/new-device-dialog.component';
 import {StatsCardComponent} from './stats-card/stats-card.component';
+import {SharedModule} from '../../shared/shared.module';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
 
 @NgModule({
-  declarations: [DashboardComponent, StatsCardComponent, DeviceListComponent, NewDeviceDialogComponent, EditDeviceDialogComponent],
+  declarations: [
+    DashboardComponent,
+    StatsCardComponent,
+    DeviceListComponent,
+    NewDeviceDialogComponent,
+    EditDeviceDialogComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -53,7 +60,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatTableModule,
     MatTooltipModule,
     PlotlyModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class DashboardModule { }
