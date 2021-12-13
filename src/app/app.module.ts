@@ -32,6 +32,8 @@ import {HomeComponent} from './view/home/home.component';
 import {FileUploadComponent} from './view/predict/file-upload/file-upload.component';
 import {PredictComponent} from './view/predict/predict.component';
 import {SettingsComponent} from './view/settings/settings.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -73,7 +75,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatToolbarModule,
     MatTableModule,
     PlotlyModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [Title],
   bootstrap: [AppComponent]

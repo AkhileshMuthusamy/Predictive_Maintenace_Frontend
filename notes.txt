@@ -6,6 +6,7 @@ npm install @angular/material@10.2.7
 npm i @ng-bootstrap/ng-bootstrap@8.0.4
 npm install angular-plotly.js plotly.js-dist-min --save
 npm install @types/plotly.js-dist-min --save-dev
+ng add @angular/pwa/pwa
 
 ng g c main-layout
 ng g module view/dashboard
