@@ -51,8 +51,8 @@ export class MainLayoutComponent implements OnInit {
 
   navigate(path): void {
     this.router.navigate([path]).then(() => {
-      if (path === '/home' || path === '/dashboard') {
-        window.location.reload();
+      if (path === '/home') {
+        // window.location.reload();
       }
     });
   }

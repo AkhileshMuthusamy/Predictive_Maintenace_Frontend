@@ -246,6 +246,11 @@ a {
   }
 }
 
+a.text {
+  text-decoration: none !important;
+  color: white;
+}
+
 table.hover {
   tbody {
     tr {
