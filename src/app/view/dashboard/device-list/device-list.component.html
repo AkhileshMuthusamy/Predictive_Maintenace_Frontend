@@ -1,5 +1,5 @@
 <div class="p-3">
-  <div [appLoader]="isDeviceListLoading">
+  <div [appLoader]="isDeviceListLoading" *ngIf="showPlot">
     <mat-card class="pr-5">
       <plotly-plot [data]="barGraph?.data" [layout]="barGraph?.layout" [config]="{displayModeBar: false}"></plotly-plot>
     </mat-card>

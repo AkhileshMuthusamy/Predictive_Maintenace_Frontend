@@ -9,6 +9,7 @@ import {ApiService} from 'src/app/shared/services/api.service';
 import {DataService} from 'src/app/shared/services/data.service';
 import {EditDeviceDialogComponent} from '../edit-device-dialog/edit-device-dialog.component';
 import {NewDeviceDialogComponent} from '../new-device-dialog/new-device-dialog.component';
+import {PlotlyComponent} from 'angular-plotly.js';
 
 @Component({
   selector: 'app-device-list',
@@ -20,6 +21,7 @@ export class DeviceListComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = ['name', 'rul', 'status', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   isDeviceListLoading = false;
+  showPlot = true;
   totalLength = 0;
   threshold = 50;
 
@@ -52,6 +54,7 @@ export class DeviceListComponent implements OnInit, AfterViewInit, OnDestroy {
   $subscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(PlotlyComponent) plotly: PlotlyComponent;
 
   constructor(
     public dialog: MatDialog,
@@ -156,6 +159,15 @@ export class DeviceListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     };
+
+    this.redrawPlot();
+  }
+
+  redrawPlot(): void {
+    this.showPlot = false;
+    setTimeout(() => {
+      this.showPlot = true;
+    }, 50);
   }
 
 }

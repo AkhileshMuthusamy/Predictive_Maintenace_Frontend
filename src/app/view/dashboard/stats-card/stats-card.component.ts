@@ -51,7 +51,6 @@ export class StatsCardComponent implements OnInit {
         let badDevice = 0;
         const dt = response.data;
         for (const d of dt) {
-          console.log(d);
           if (d.rul > this.threshold) {
             goodDevice += 1;
           } else {
